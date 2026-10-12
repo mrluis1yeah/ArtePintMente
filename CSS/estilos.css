@@ -1,4 +1,8 @@
-:root { /*aqui para establecer los colores principales*/
+/* =========================================================
+   ARTE PIGMENTE — estilos principales
+   Cambia los colores en :root para ajustar toda la identidad.
+   ========================================================= */
+:root {
   --cafe-oscuro: #3B2922;
   --marron: #795548;
   --caramelo: #B08968;
@@ -145,6 +149,55 @@ em { color: var(--marron); font-weight: 400; }
 .modal-contenido img { width: 100%; max-height: 500px; object-fit: cover; background: var(--crema); }
 .modal-contenido h2 { font-size: 2rem; }
 .modal-precio { color: var(--marron); font-weight: 700; }
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--cafe-oscuro);
+}
+
+.logo-imagen {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.marca-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.marca-nombre {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.marca-eslogan {
+  font-size: 0.72rem;
+  color: var(--marron);
+  line-height: 1.3;
+}
+
+@media (max-width: 480px) {
+  .logo-imagen {
+    width: 38px;
+    height: 38px;
+  }
+
+  .marca-nombre {
+    font-size: 1.15rem;
+  }
+
+  .marca-eslogan {
+    font-size: 0.62rem;
+  }
+}
+
 @media (max-width: 760px) {
   body { padding-bottom: 88px; }
   .barra-superior { padding: 18px 22px; }
@@ -186,4 +239,4 @@ em { color: var(--marron); font-weight: 400; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-} 
+}
