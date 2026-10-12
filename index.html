@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arte Pigmente: ilustraciones y obras personalizadas hechas a mano.">
+  <title>Arte Pigmente | Arte que cuenta historias</title>
+  <link rel="stylesheet" href="CSS/estilos.css">
+  <script src="JS/script.js" defer></script>
+</head>
+<body>
+  <!-- Navegación fija inferior: inspirada en el soporte de un caballete. -->
+  <a class="salto-contenido" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra-superior" id="inicio">
+    <a class="marca" href="#inicio" aria-label="Arte Pigmente, ir al inicio">
+      <span class="marca-icono" aria-hidden="true">✿</span>
+      <span>Arte <em>Pigmente</em></span>
+    </a>
+    <a class="enlace-superior" href="#contacto">Hablemos de tu idea <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="contenido">
+    <section class="portada seccion" aria-labelledby="titulo-portada">
+      <div class="portada-texto">
+        <p class="sobrelinea">ARTE HECHO A MANO · IDEAS CON HISTORIA</p>
+        <h1 id="titulo-portada">Plasmando el arte de <em>nuestro ser.</em></h1>
+        <p class="texto-intro">Más que dibujos, son ideas, emociones y sueños en cada trazo. Creamos obras personalizadas que cuentan historias: la tuya.</p>
+        <div class="grupo-botones">
+          <a class="boton boton-principal" href="#galeria">Ver nuestras obras <span aria-hidden="true">→</span></a>
+          <a class="boton boton-secundario" href="#contacto">Crear mi obra</a>
+        </div>
+        <p class="nota-portada"><span aria-hidden="true">✦</span> Cada idea merece su propio lienzo.</p>
+      </div>
+      <div class="portada-imagen">
+        <!-- Cambia "imagenes/obra-destacada.jpg" por el nombre de tu fotografía principal. -->
+        <img src="imagenes/obra-destacada.jpg" alt="Obra artística destacada de Arte Pigmente" onerror="this.onerror=null;this.src='https://placehold.co/900x1000/E9DDCA/3B2922?text=Tu+obra+destacada';">
+        <span class="sello-imagen">Hecho con intención</span>
+      </div>
+      <div class="portada-pie"><span>Arte original</span><span>Detalles que emocionan</span><span>Creado para ti</span></div>
+    </section>
+
+    <section class="seccion introduccion" id="nosotros" aria-labelledby="titulo-nosotros">
+      <div class="introduccion-imagen marco-foto">
+        <img src="imagenes/taller.jpg" alt="Espacio de trabajo y materiales artísticos" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x850/D6BFA8/3B2922?text=El+taller+artistico';">
+        <div class="nota-manuscrita">El arte también<br>es una forma<br>de existir. ♡</div>
+      </div>
+      <div class="introduccion-texto">
+        <p class="sobrelinea">SOBRE ARTE PIGMENTE</p>
+        <h2>Una pasión,<br><em>tu historia en arte.</em></h2>
+        <p>Arte Pigmente nace de la pasión por crear y de la idea de que una ilustración puede guardar recuerdos, emociones y pequeños mundos personales.</p>
+        <p>Trabajamos cada encargo escuchando lo que imaginas y buscando convertirlo en una obra con detalles propios. Porque no se trata solamente de decorar un espacio: se trata de darle significado.</p>
+        <a class="enlace-flecha" href="#proceso">Conoce nuestro proceso <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="seccion proceso" id="proceso" aria-labelledby="titulo-proceso">
+      <div class="encabezado-seccion centrado">
+        <p class="sobrelinea">DE LA IDEA A LA OBRA</p>
+        <h2 id="titulo-proceso">Cada trazo tiene su momento.</h2>
+        <p>Un proceso creativo que convierte tu idea en una pieza hecha con cuidado.</p>
+      </div>
+      <div class="pasos-proceso">
+        <article class="paso"><span class="paso-icono" aria-hidden="true">01</span><h3>La idea</h3><p>Nos cuentas qué imaginas, qué te inspira o qué recuerdo quieres conservar.</p></article>
+        <article class="paso"><span class="paso-icono" aria-hidden="true">02</span><h3>El diseño</h3><p>Definimos estilo, tamaño, materiales y detalles importantes para tu obra.</p></article>
+        <article class="paso"><span class="paso-icono" aria-hidden="true">03</span><h3>La creación</h3><p>Trabajamos en el dibujo o la pintura y compartimos el avance acordado.</p></article>
+        <article class="paso"><span class="paso-icono" aria-hidden="true">04</span><h3>El resultado</h3><p>Revisamos los detalles finales y coordinamos la entrega contigo.</p></article>
+      </div>
+    </section>
+
+    <section class="seccion galeria" id="galeria" aria-labelledby="titulo-galeria">
+      <div class="encabezado-seccion encabezado-galeria">
+        <div><p class="sobrelinea">UNA MUESTRA DE NUESTRO TRABAJO</p><h2 id="titulo-galeria">Obras y servicios</h2><p>Explora estilos, técnicas e ideas para tu próxima obra.</p></div>
+        <a class="enlace-flecha" href="#galeria">Explora las obras <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="herramientas-galeria">
+        <label class="campo-busqueda"><span class="solo-lectores">Buscar obras</span><span aria-hidden="true">⌕</span><input id="busqueda-obras" type="search" placeholder="Buscar por nombre o técnica..." autocomplete="off"></label>
+        <div class="filtros" id="filtros-categorias" aria-label="Filtrar obras por categoría">
+          <button class="filtro activo" type="button" data-categoria="Todas" aria-pressed="true">Todas</button>
+          <button class="filtro" type="button" data-categoria="Grafito" aria-pressed="false">Grafito</button>
+          <button class="filtro" type="button" data-categoria="Color" aria-pressed="false">Color</button>
+          <button class="filtro" type="button" data-categoria="Pintura" aria-pressed="false">Pintura</button>
+          <button class="filtro" type="button" data-categoria="Personalizadas" aria-pressed="false">Personalizadas</button>
+        </div>
+      </div>
+      <div class="rejilla-obras" id="rejilla-obras" aria-live="polite">
+        <!-- Las tarjetas se generan desde JS/script.js. Añade obras al listado de ese archivo. -->
+      </div>
+      <p class="sin-resultados" id="sin-resultados" hidden>No encontramos obras con esa búsqueda. Prueba con otra palabra o categoría.</p>
+      <div class="galeria-final">
+        <p>¿Tienes una idea rondando por la cabeza?</p>
+        <a class="boton boton-principal" href="#contacto">Hagámosla obra <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="seccion encargo" aria-labelledby="titulo-encargo">
+      <div class="encargo-foto">
+        <img src="imagenes/obra-personalizada.jpg" alt="Ejemplo de una obra personalizada enmarcada" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x900/B08968/FAF6F0?text=Una+obra+hecha+para+ti';">
+      </div>
+      <div class="encargo-texto">
+        <p class="sobrelinea">TU IDEA, NUESTRA CREACIÓN</p>
+        <h2 id="titulo-encargo">¿Quieres tu propia obra?</h2>
+        <p>Tú eliges la idea, el estilo y los detalles que quieres conservar. Juntos definimos las posibilidades y convertimos tu inspiración en una pieza personal.</p>
+        <ul class="lista-check">
+          <li>Dibujos y retratos personalizados</li><li>Cuadros por encargo</li><li>Opciones de técnica y tamaño</li><li>Orientación para definir tu idea</li>
+        </ul>
+        <a class="boton boton-principal" href="#contacto">Solicitar un encargo <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="seccion consejos" id="consejos" aria-labelledby="titulo-consejos">
+      <div class="encabezado-seccion">
+        <p class="sobrelinea">UN CUADERNO ABIERTO</p>
+        <h2 id="titulo-consejos">Consejos para seguir creando.</h2>
+        <p>Pequeñas ideas para aprender, experimentar y cuidar tus obras.</p>
+      </div>
+      <div class="rejilla-consejos">
+        <article class="tarjeta-consejo"><div class="consejo-numero">01 / TÉCNICA</div><h3>Construye desde las formas básicas</h3><p>Antes de perseguir cada detalle, observa la figura general. Círculos, líneas y proporciones ayudan a ordenar el dibujo.</p></article>
+        <article class="tarjeta-consejo"><div class="consejo-numero">02 / INSPIRACIÓN</div><h3>Guarda lo que te despierta curiosidad</h3><p>Una canción, una sombra o un recuerdo pueden ser el inicio de una obra. Anota la idea antes de que se escape.</p></article>
+        <article class="tarjeta-consejo"><div class="consejo-numero">03 / CONSERVACIÓN</div><h3>Protege tus obras del sol directo</h3><p>La luz intensa, la humedad y el polvo pueden deteriorar los materiales. Elige un lugar seco y limpia con suavidad.</p></article>
+      </div>
+      <div class="consejos-accion"><p>¿Quieres más consejos o tienes una duda sobre tu proyecto?</p><a class="boton boton-secundario" href="#contacto">Hablemos de arte <span aria-hidden="true">→</span></a></div>
+    </section>
+
+    <section class="seccion contacto" id="contacto" aria-labelledby="titulo-contacto">
+      <div class="contacto-texto">
+        <p class="sobrelinea">HAGAMOS ARTE JUNTOS</p>
+        <h2 id="titulo-contacto">Cuéntanos tu idea.</h2>
+        <p>¿Tienes una fotografía, un concepto o una pregunta? Escríbenos por WhatsApp para conversar sobre tu obra.</p>
+        <div class="datos-contacto">
+          <p><span aria-hidden="true">✉</span> <span id="correo-mostrado">Añade aquí tu correo de contacto</span></p>
+          <p><span aria-hidden="true">◷</span> Respuesta según disponibilidad del emprendimiento</p>
+        </div>
+        <a class="boton boton-principal boton-whatsapp" id="boton-whatsapp" href="https://wa.me/573000000000?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20una%20obra%20personalizada." target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
+        <p class="nota-pequena">Recuerda reemplazar el número de ejemplo por el WhatsApp real del emprendimiento.</p>
+      </div>
+      <form class="formulario-contacto" id="formulario-contacto">
+        <h3>Prepara tu mensaje</h3>
+        <p>Este formulario organiza tu consulta y abre WhatsApp con el mensaje listo para enviar.</p>
+        <label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" autocomplete="name" required maxlength="80" placeholder="¿Cómo te llamas?">
+        <label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" autocomplete="email" required maxlength="120" placeholder="tunombre@correo.com">
+        <label for="asunto">¿Qué tienes en mente?</label><input id="asunto" name="asunto" type="text" required maxlength="120" placeholder="Ej. Retrato personalizado">
+        <label for="mensaje">Cuéntanos un poco más</label><textarea id="mensaje" name="mensaje" rows="4" required maxlength="1000" placeholder="Técnica, tamaño, idea o fecha aproximada..."></textarea>
+        <button class="boton boton-principal boton-ancho" type="submit">Preparar mensaje en WhatsApp <span aria-hidden="true">→</span></button>
+        <p class="mensaje-formulario" id="mensaje-formulario" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="pie-pagina">
+    <a class="marca marca-pie" href="#inicio"><span class="marca-icono" aria-hidden="true">✿</span><span>Arte <em>Pigmente</em></span></a>
+    <p>Plasmando el arte de nuestro ser.</p>
+    <p class="copyright">© <span id="anio-actual"></span> Arte Pigmente. El arte también cuenta tu historia.</p>
+  </footer>
+
+  <!-- Caballete: navegación fija abajo. En móviles se adapta al ancho disponible. -->
+  <nav class="navegacion-caballete" aria-label="Navegación principal">
+    <a class="enlace-nav activo" href="#inicio"><span aria-hidden="true">⌂</span><span>Inicio</span></a>
+    <a class="enlace-nav" href="#galeria"><span aria-hidden="true">▧</span><span>Galería</span></a>
+    <a class="enlace-nav" href="#consejos"><span aria-hidden="true">✎</span><span>Consejos</span></a>
+    <a class="enlace-nav" href="#nosotros"><span aria-hidden="true">♡</span><span>Nosotros</span></a>
+    <a class="enlace-nav" href="#contacto"><span aria-hidden="true">↗</span><span>Contacto</span></a>
+  </nav>
+
+  <!-- Ventana accesible para consultar detalles de una obra. -->
+  <dialog class="modal-obra" id="modal-obra" aria-labelledby="modal-titulo">
+    <button class="modal-cerrar" id="cerrar-modal" type="button" aria-label="Cerrar detalles">×</button>
+    <div class="modal-contenido" id="modal-contenido"></div>
+  </dialog>
+</body>
+</html>
