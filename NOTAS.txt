@@ -1,9 +1,9 @@
-ARTE PIGMENTE — NOTAS PARA EDITAR EL PROYECTO
+Artepintmente — NOTAS PARA EDITAR EL PROYECTO
 
 1. EJECUTAR CON XAMPP
-- Copia la carpeta ArtePigmente dentro de htdocs.
+- Copia la carpeta ArtePintmente dentro de htdocs.
 - Enciende Apache en XAMPP.
-- Abre http://localhost/ArtePigmente/
+- Abre http://localhost/ArtePintmente/
 - No necesita Node.js, PHP ni base de datos.
 
 2. FOTOS

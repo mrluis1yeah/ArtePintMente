@@ -1,8 +1,4 @@
-/* =========================================================
-   ARTE PIGMENTE — estilos principales
-   Cambia los colores en :root para ajustar toda la identidad.
-   ========================================================= */
-:root {
+:root { /*aqui para establecer los colores principales*/
   --cafe-oscuro: #3B2922;
   --marron: #795548;
   --caramelo: #B08968;
@@ -190,4 +186,4 @@ em { color: var(--marron); font-weight: 400; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-}
+} 

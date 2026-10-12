@@ -1,5 +1,5 @@
 /* =========================================================
-   ARTE PIGMENTE — funciones de la página
+   Artepintmente — funciones de la página
    Para añadir obras, edita el listado "obras" más abajo.
    ========================================================= */
 
