@@ -1,0 +1,96 @@
+ARTEPINTMENTE - NOTAS PARA MODIFICAR LA PÁGINA
+================================================
+
+
+1. ESTRUCTURA DE CARPETAS
+ArtePintMente/
+  index.html                  Estructura y textos de la página.
+  Css/Estilos.css             Colores, tamaños, distribución y responsive.
+  Imagenes/logo.svg           Logo editable como SVG.
+  Imagenes/seccion_*_Bg.jpg   Fondos usados por las secciones.
+  Imagenes/iconos/            Iconos SVG.
+  Imagenes/Obras/             Obras de galería y fotos de servicios.
+  Imagenes/Perfil_testimonio/ Retratos ilustrados de ejemplo.
+  Js/script.js                Archivo vacío de funciones.
+  Notas_Locas.txt             Estas notas.
+
+3. IMPORTANTE: CAMBIAR EL WHATSAPP
+Busca en index.html esta dirección:
+  https://wa.me/573001234567
+Reemplaza 573001234567 por el número real con indicativo del país, solo números.
+Ejemplo ficticio: 573001112233. No uses +, espacios ni guiones.
+
+4. CAMBIAR NOMBRE, TELÉFONO, CORREO Y UBICACIÓN
+
+- Cambia el contenido entre las etiquetas, sin borrar las etiquetas HTML.
+- Los teléfonos, el correo, la ciudad y los testimonios
+- Cambia los testimonios por opiniones reales antes de publicar.
+
+5. AÑADIR O CAMBIAR UNA OBRA DE LA GALERÍA
+- Copia una imagen JPG, PNG o WebP a Imagenes/Obras/.
+- Ponle un nombre simple, por ejemplo mi_obra_nueva.jpg.
+- En index.html, busca la sección con class="rejilla-galeria".
+- Copia uno de los bloques <a>...</a> y cambia las rutas de la imagen y el texto alt.
+- Ejemplo:
+  <a href="Imagenes/Obras/mi_obra_nueva.jpg" target="_blank">
+    <img src="Imagenes/Obras/mi_obra_nueva.jpg" alt="Descripción de la obra">
+  </a>
+- El texto alt describe la imagen para lectores de pantalla y cuando no carga.
+- Si borras una obra, borra el bloque <a> completo que la contiene.
+- Las imágenes incluidas aquí se recortaron de la captura que compartiste como referencia.
+  Sustitúyelas por fotos originales de las obras reales para obtener el mejor resultado.
+
+6. CAMBIAR LOS FONDOS
+- Los fondos están en Imagenes/seccion_1_Bg.jpg hasta seccion_5_Bg.jpg.
+- Puedes reemplazarlos por otras imágenes conservando exactamente el mismo nombre.
+- Si prefieres cambiar el archivo de nombre, actualiza la ruta en Css/Estilos.css.
+- La sección de portada usa seccion_1_Bg.jpg.
+- Las secciones oscuras reutilizan seccion_2_Bg.jpg.
+- La sección de proceso usa seccion_3_Bg.jpg.
+- Consejos usa seccion_5_Bg.jpg.
+- Los fondos se oscurecen con capas CSS para que el texto sea legible.
+
+7. CAMBIAR COLORES Y LETRAS
+- Abre Css/Estilos.css.
+- Al principio busca :root.
+- --fondo es el color oscuro principal.
+- --dorado es el color dorado de los detalles.
+- --dorado-claro es el dorado de los botones.
+- --texto es el color principal del texto.
+- Cambia los códigos hexadecimales (por ejemplo #e9a24b) por el color que quieras.
+- Las cabeceras usan Georgia y el texto general usa Arial para mantenerlo simple.
+
+8. MODIFICAR SERVICIOS O PASOS DEL PROCESO
+- Busca en index.html "NUESTROS SERVICIOS" o "EL PROCESO".
+- Edita el título, la descripción y el texto de cada tarjeta.
+- Para cambiar las fotos, modifica el valor de src en la etiqueta img.
+- Mantén la ruta relativa desde index.html: Imagenes/Obras/nombre.jpg.
+
+9. CAMBIAR TESTIMONIOS Y FOTOS DE PERFIL
+- Los perfiles de ejemplo están en Imagenes/Perfil_testimonio/.
+- Puedes reemplazar los SVG por fotos reales, pero actualiza el src en index.html.
+- Antes de publicar, pide permiso para usar las fotos y opiniones de tus clientes.
+- Los nombres y opiniones que vienen en la maqueta son ejemplos, no testimonios verificados.
+
+10. FORMULARIO DE CONTACTO
+- El formulario es visual; no almacena ni envía la información.
+- El botón "Continuar por WhatsApp" abre el chat de WhatsApp indicado en el enlace.
+- Para una página sencilla, puedes pedir que escriban directamente por WhatsApp.
+- Si más adelante necesitas enviar el contenido del formulario automáticamente, se requiere
+  programación adicional o un servicio externo. El archivo script.js está vacío a propósito.
+
+11. RESPONSIVE DESIGN
+- El CSS usa Flexbox y CSS Grid para ordenar los elementos.
+- @media (max-width: 1000px) adapta la página a tabletas y pantallas medianas.
+- @media (max-width: 650px) cambia varias columnas a una sola o dos columnas en móviles.
+- @media (max-width: 360px) hace ajustes para teléfonos pequeños.
+- No hace falta JavaScript para que estas adaptaciones funcionen.
+
+12. ANTES DE PUBLICAR
+- Cambia el WhatsApp de ejemplo.
+- Revisa teléfono, correo, ubicación y textos.
+- Sustituye las imágenes recortadas de la captura por las obras originales.
+- Comprueba que tienes permiso para publicar fotos y testimonios.
+- Prueba index.html en una pantalla grande y en un móvil.
+- Esta carpeta es una página estática. Para que otras personas la visiten por internet,
+  tendrás que subirla a un servicio de alojamiento web.
