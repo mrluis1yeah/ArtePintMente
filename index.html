@@ -138,7 +138,7 @@
             <div class="contenedor">
                 <div class="titulo-con-enlace">
                     <div><p class="sobretitulo">GALERÍA</p><h2>Nuestro arte, en imágenes</h2></div>
-                    <a href="#contacto">Ver toda la galería →</a>
+                    <a href="galeria.html">Ver toda la galería →</a>
                 </div>
                 <div class="rejilla-galeria">
                     <a href="Imagenes/Obras/Obra1.jpg" target="_blank" aria-label="Ver obra 1"><img src="Imagenes/Obras/Obra1.jpg" alt="Obra artística 1"></a>
@@ -218,14 +218,41 @@
                     <p><img src="Imagenes/iconos/icon_correo.svg" alt=""> artepintmente@gmail.com</p>
                     <p><img src="Imagenes/iconos/icon_ubicacion.svg" alt=""> Ibagué, Tolima, Colombia</p>
                 </div>
-                <div class="formulario">
-                    <label for="nombre">Nombre</label><input id="nombre" type="text" placeholder="Nombre">
-                    <label for="correo">Correo electrónico</label><input id="correo" type="email" placeholder="Correo electrónico">
-                    <label for="mensaje">Mensaje</label><textarea id="mensaje" rows="2" placeholder="Cuéntanos tu idea"></textarea>
-                    <!-- Enlace funcional sin JavaScript: el usuario puede escribir directamente por WhatsApp. -->
-                    <a class="boton boton-dorado boton-enviar" href="https://wa.me/573001234567" target="_blank" rel="noopener">Continuar por WhatsApp →</a>
-                    <small>Este formulario es una maqueta visual; no guarda ni envía información.</small>
-                </div>
+                    <form class="formulario" id="formularioContacto">
+
+                        <!-- Campo para el nombre -->
+                        <label for="nombre">Nombre</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            placeholder="Escribe tu nombre"
+                            required
+                        >
+
+                        <!-- Campo para el correo -->
+                        <label for="correo">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="correo"
+                            placeholder="Escribe tu correo"
+                            required
+                        >
+
+                        <!-- Campo para el mensaje -->
+                        <label for="mensaje">Mensaje</label>
+                        <textarea
+                            id="mensaje"
+                            rows="4"
+                            placeholder="Cuéntanos qué obra tienes en mente..."
+                            required
+                        ></textarea>
+
+                        <!-- Botón que activa JavaScript -->
+                        <button type="submit" class="boton boton-dorado boton-enviar">
+                            Enviar mensaje →
+                        </button>
+
+                    </form>
             </div>
         </section>
     </main>
@@ -235,8 +262,8 @@
         <div class="contenedor pie-contenido">
             <a class="marca" href="#inicio"><img src="Imagenes/logo.svg" alt="ArtePintMente"></a>
             <nav aria-label="Navegación del pie">
-                <a href="#inicio">Inicio</a><a href="#galeria">Galería</a><a href="#servicios">Servicios</a>
-                <a href="#proceso">Proceso</a><a href="#consejos">Consejos</a><a href="#contacto">Contacto</a>
+                <a href="#inicio">Inicio</a><a href="galeria.html">Galería</a><a href="#servicios">Servicios</a>
+                <a href="#proceso">Proceso</a><a href="#consejos">Consejos</a>
             </nav>
             <a class="whatsapp-pie" href="https://wa.me/573001234567" target="_blank" rel="noopener">
                 <img src="Imagenes/iconos/icon_whatsapp.svg" alt=""> WhatsApp

@@ -1,0 +1,399 @@
+/* ==========================================
+   ESTILOS DE LA GALERÍA DE ARTEPINTMENTE
+========================================== */
+
+
+/* PORTADA */
+
+.galeria-portada {
+
+    padding: 65px 0;
+
+    background:
+        linear-gradient(
+            rgba(3, 15, 20, 0.85),
+            rgba(3, 15, 20, 0.85)
+        ),
+        url("../Imagenes/seccion_1_Bg.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    text-align: center;
+
+}
+
+.galeria-portada h1 {
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(32px, 5vw, 48px);
+
+    margin-bottom: 15px;
+
+}
+
+.galeria-portada p:not(.sobretitulo) {
+
+    color: #d0d0d0;
+
+}
+
+
+/* CONTENIDO DE GALERÍA */
+
+.contenido-galeria {
+
+    padding-top: 45px;
+
+    padding-bottom: 60px;
+
+}
+
+.galeria-titulo {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+.galeria-titulo h2 {
+
+    margin-bottom: 0;
+
+}
+
+#cantidadObras {
+
+    color: #e9a24b;
+
+    font-size: 13px;
+
+}
+
+
+/* REJILLA DE OBRAS */
+
+.rejilla-obras {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+}
+
+
+/* TARJETAS */
+
+.tarjeta-obra {
+
+    background: #172126;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: transform 0.3s, border 0.3s;
+
+}
+
+.tarjeta-obra:hover {
+
+    transform: translateY(-6px);
+
+    border-color: #e9a24b;
+
+}
+
+.tarjeta-obra img {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+}
+
+.datos-tarjeta {
+
+    padding: 15px;
+
+}
+
+.datos-tarjeta h3 {
+
+    font-size: 16px;
+
+    margin-bottom: 8px;
+
+}
+
+.datos-tarjeta p {
+
+    color: #c0c0c0;
+
+    font-size: 12px;
+
+    margin-bottom: 10px;
+
+}
+
+.precio-tarjeta {
+
+    color: #f0ad59;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+}
+
+
+/* OVERLAY: FONDO OSCURO DE LA VENTANA */
+
+.overlay {
+
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0,0,0,0.85);
+
+    z-index: 100;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+}
+
+
+/* Cuando JavaScript añade esta clase, aparece el overlay */
+
+.overlay.activo {
+
+    display: flex;
+
+}
+
+
+/* VENTANA CON LOS DETALLES */
+
+.ventana-obra {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    max-width: 850px;
+
+    width: 100%;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #111e24;
+
+    border: 1px solid rgba(233,162,75,0.5);
+
+    border-radius: 12px;
+
+}
+
+
+/* IMAGEN DEL DETALLE */
+
+.imagen-detalle {
+
+    background: #080f13;
+
+}
+
+.imagen-detalle img {
+
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 350px;
+
+    max-height: 550px;
+
+    object-fit: contain;
+
+}
+
+
+/* INFORMACIÓN */
+
+.informacion-obra {
+
+    padding: 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+.informacion-obra h2 {
+
+    font-family: Georgia, serif;
+
+    font-size: 30px;
+
+}
+
+.informacion-obra > p:not(.sobretitulo):not(.precio-detalle) {
+
+    color: #d0d0d0;
+
+    line-height: 1.7;
+
+}
+
+.precio-detalle {
+
+    color: #f2ae58;
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    margin: 15px 0 25px;
+
+}
+
+
+/* BOTÓN PARA CERRAR */
+
+.cerrar-overlay {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 15px;
+
+    z-index: 2;
+
+    background: transparent;
+
+    color: white;
+
+    border: none;
+
+    font-size: 35px;
+
+    cursor: pointer;
+
+}
+
+
+/* EFECTO DEL BOTÓN */
+
+.cerrar-overlay:hover {
+
+    color: #f2ae58;
+
+}
+
+
+/* RESPONSIVE DESIGN */
+
+
+/* Tabletas */
+
+@media (max-width: 900px) {
+
+    .rejilla-obras {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* Móviles */
+
+@media (max-width: 600px) {
+
+    .rejilla-obras {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 12px;
+
+    }
+
+    .ventana-obra {
+
+        grid-template-columns: 1fr;
+
+        max-width: 430px;
+
+    }
+
+    .imagen-detalle img {
+
+        min-height: 220px;
+
+        max-height: 300px;
+
+    }
+
+    .informacion-obra {
+
+        padding: 22px;
+
+    }
+
+    .informacion-obra h2 {
+
+        font-size: 25px;
+
+    }
+
+}
+
+
+/* Teléfonos muy pequeños */
+
+@media (max-width: 360px) {
+
+    .rejilla-obras {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

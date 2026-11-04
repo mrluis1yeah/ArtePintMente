@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Galería | ArtePintMente</title>
+
+    <!-- Estilos generales de la página principal -->
+    <link rel="stylesheet" href="Css/Estilos.css">
+
+    <!-- Estilos específicos de la galería -->
+    <link rel="stylesheet" href="Css/Galeria.css">
+
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado">
+
+        <div class="contenedor barra">
+
+            <a class="marca" href="index.html">
+
+                <img src="Imagenes/logo.svg" alt="ArtePintMente">
+
+            </a>
+
+            <nav class="navegacion">
+
+                <a href="index.html">Inicio</a>
+
+                <a href="galeria.html">Galería</a>
+
+                <a href="index.html#servicios">Servicios</a>
+
+                <a href="index.html#proceso">Proceso</a>
+
+                <a href="index.html#consejos">Consejos</a>
+
+                <a href="index.html#contacto">Contacto</a>
+
+            </nav>
+
+            <a class="boton boton-borde"
+               href="https://wa.me/573001234567"
+               target="_blank">
+
+                Escríbenos
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- PRESENTACIÓN DE LA GALERÍA -->
+
+    <section class="galeria-portada">
+
+        <div class="contenedor">
+
+            <p class="sobretitulo">NUESTRA COLECCIÓN</p>
+
+            <h1>Un mundo de arte y creatividad</h1>
+
+            <p>
+                Descubre nuestras obras, encuentra inspiración
+                y elige aquella que conecte contigo.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- GALERÍA DE OBRAS -->
+
+    <main class="contenedor contenido-galeria">
+
+        <div class="galeria-titulo">
+
+            <div>
+
+                <p class="sobretitulo">ARTE HECHO CON PASIÓN</p>
+
+                <h2>Nuestras obras</h2>
+
+            </div>
+
+            <!-- Aquí JavaScript mostrará cuántas obras existen -->
+
+            <p id="cantidadObras"></p>
+
+        </div>
+
+
+        <!-- JavaScript colocará las tarjetas aquí -->
+
+        <div class="rejilla-obras" id="contenedorObras">
+
+        </div>
+
+    </main>
+
+
+    <!-- VENTANA EMERGENTE DE CADA OBRA -->
+
+    <div class="overlay" id="overlayObra">
+
+        <div class="ventana-obra">
+
+            <!-- Botón para cerrar la ventana -->
+
+            <button class="cerrar-overlay" id="cerrarOverlay">
+                &times;
+            </button>
+
+
+            <!-- Imagen de la obra -->
+
+            <div class="imagen-detalle">
+
+                <img src="" alt="" id="imagenDetalle">
+
+            </div>
+
+
+            <!-- Información de la obra -->
+
+            <div class="informacion-obra">
+
+                <p class="sobretitulo">DETALLES DE LA OBRA</p>
+
+                <h2 id="nombreDetalle"></h2>
+
+                <p id="descripcionDetalle"></p>
+
+                <p class="precio-detalle" id="precioDetalle"></p>
+
+
+                <!-- Botón que genera el mensaje personalizado -->
+
+                <button class="boton boton-dorado"
+                        id="botonConsultar">
+
+                    Consultar por WhatsApp →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer class="pie">
+
+        <div class="contenedor pie-contenido">
+
+            <a class="marca" href="index.html">
+
+                <img src="Imagenes/logo.svg" alt="ArtePintMente">
+
+            </a>
+
+            <p>© 2026 ArtePintMente. Todos los derechos reservados.</p>
+
+            <a class="whatsapp-pie"
+               href="https://wa.me/573001234567"
+               target="_blank">
+
+                WhatsApp
+
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ARCHIVO JAVASCRIPT DE LA GALERÍA -->
+
+    <script src="Js/galeria.js"></script>
+
+</body>
+
+</html>
