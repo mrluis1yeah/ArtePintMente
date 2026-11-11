@@ -1,61 +1,50 @@
 // ========================================
-// FORMULARIO DE CONTACTO DE ARTEPINTMENTE
+// CONTACTO DE ARTEPINTMENTE (index y galería)
+// Cualquier <form class="formulario"> con campos nombre, correo y mensaje
+// y dos botones [data-canal="whatsapp"] / [data-canal="correo"] funciona solo.
 // ========================================
 
+// Número de WhatsApp de la emprendedora (con indicativo del país, solo números).
+const numeroWhatsApp = "573227919305";
 
-// 1. Número de WhatsApp de la emprendedora.
+document.querySelectorAll("form.formulario").forEach((formulario) => {
+    const estado = formulario.querySelector(".estado");
 
-const numeroWhatsApp = "573001234567";
+    const mostrar = (texto, tipo = "") => {
+        estado.textContent = texto;
+        estado.className = "estado " + tipo;
+    };
 
+    // e.submitter es el botón que se pulsó: así sabemos el canal elegido.
+    formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const boton = e.submitter;
+        const { nombre, correo, mensaje } = Object.fromEntries(new FormData(formulario));
 
-// 2. Buscamos el formulario en nuestro HTML.
+        // WhatsApp: abre el chat con el mensaje ya escrito.
+        if (boton.dataset.canal === "whatsapp") {
+            const texto = `¡Hola! Buen día${nombre ? `, soy ${nombre}` : ""}.\n\n${mensaje}${correo ? `\n\nMi correo: ${correo}` : ""}`;
+            window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(texto)}`, "_blank");
+            return;
+        }
 
-const formulario = document.getElementById("formularioContacto");
+        // Correo: lo envía la función del servidor /api/enviar.
+        boton.disabled = true;
+        mostrar("Enviando tu mensaje...", "info");
 
+        const respuesta = await fetch("/api/enviar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, correo, mensaje })
+        }).then((r) => r.json()).catch(() => null);
 
-// 3. Detectamos cuando el usuario pulsa el botón Enviar.
-
-formulario.addEventListener("submit", function(event) {
-
-    // Evitamos que la página se recargue.
-    event.preventDefault();
-
-
-    // 4. Obtenemos la información escrita por el usuario.
-
-    const nombre = document.getElementById("nombre").value;
-
-    const correo = document.getElementById("correo").value;
-
-    const mensaje = document.getElementById("mensaje").value;
-
-
-    // 5. Construimos el mensaje que llegará a WhatsApp.
-
-    const mensajeWhatsApp =
-        "¡Hola! Buen día. Me gustaría ponerme en contacto con ArtePintMente.\n\n" +
-
-        "Mi nombre es: " + nombre + "\n" +
-
-        "Mi correo electrónico es: " + correo + "\n\n" +
-
-        "Mi mensaje:\n" + mensaje;
-
-
-    // 6. Convertimos el mensaje para que pueda viajar por una URL.
-
-    const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
-
-
-    // 7. Creamos el enlace de WhatsApp.
-
-    const enlaceWhatsApp =
-        "https://wa.me/" + numeroWhatsApp +
-        "?text=" + mensajeCodificado;
-
-
-    // 8. Abrimos WhatsApp con el mensaje preparado.
-
-    window.open(enlaceWhatsApp, "_blank");
-
+        const enviado = respuesta?.success;
+        mostrar(
+            enviado ? "¡Listo! Recibimos tu mensaje y te responderemos pronto."
+                    : respuesta?.message || "No pudimos enviarlo. Inténtalo de nuevo o escríbenos por WhatsApp.",
+            enviado ? "exito" : "error"
+        );
+        if (enviado) formulario.reset();
+        boton.disabled = false;
+    });
 });

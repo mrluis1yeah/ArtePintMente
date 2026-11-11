@@ -20,7 +20,7 @@
 }
 html {
     scroll-behavior: smooth; /* Desplazamiento suave al tocar los enlaces del menú. */
-    scroll-padding-top: 24px;
+    scroll-padding-top: 80px; /* Deja libre el espacio del encabezado fijo. */
 }
 
 body {
@@ -78,27 +78,54 @@ h3 {
     margin-bottom: 8px;
 }
 
-/* 2. Botones reutilizables */
+/* 2. Botones reutilizables: se elevan, brillan y se hunden al pulsarlos */
 .boton {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 9px;
-    padding: 11px 18px;
+    padding: 12px 22px;
     border-radius: 25px;
+    font: inherit;
     font-size: 13px;
-    transition: background-color 0.2s, color 0.2s;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
 }
+
+/* Destello que cruza el botón al pasar el cursor */
+.boton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.45) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.6s;
+}
+
+.boton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(233,162,75,0.4);
+}
+
+.boton:hover::after { transform: translateX(120%); }
+.boton:active { transform: scale(0.96); box-shadow: none; }
+.boton:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.boton:disabled { opacity: 0.6; pointer-events: none; }
+
+/* La flecha → se desliza hacia adelante */
+.boton span { transition: transform 0.2s; }
+.boton:hover span { transform: translateX(5px); }
 
 .boton-dorado {
     color: #17130d;
-    background: var(--dorado-claro);
+    background: linear-gradient(135deg, var(--dorado-claro), var(--dorado));
     border: 1px solid var(--dorado-claro);
 }
 
-.boton-dorado:hover {
-    background: #fff0d6;
-}
+.boton-dorado:hover { background: linear-gradient(135deg, #fff0d6, var(--dorado-claro)); }
 
 .boton-borde {
     color: var(--dorado-claro);
@@ -117,21 +144,39 @@ h3 {
     border: 1px solid #07151b;
 }
 
-.boton-oscuro:hover {
-    background: #20323a;
-}
+.boton-oscuro:hover { background: #20323a; }
 
 .icono-boton {
     width: 17px;
     height: 17px;
 }
 
+/* El icono naranja del correo se oscurece cuando el botón se vuelve dorado */
+.boton-borde:hover [src$="correo.svg"] { filter: brightness(0); }
+
+/* Latido suave solo en el botón principal de la portada */
+.portada .boton-dorado { animation: latido 2.6s infinite; }
+.portada .boton-dorado:hover { animation: none; }
+
+@keyframes latido {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,193,106,0.55); }
+    60% { box-shadow: 0 0 0 14px rgba(255,193,106,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .boton, .boton::after, .boton span { transition: none; }
+    .portada .boton-dorado { animation: none; }
+}
+
 /* 3. Encabezado y menú */
+/* El encabezado queda anclado arriba mientras se recorre la página */
 .encabezado {
-    position: relative;
-    z-index: 5;
-    background: #06131a;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #06131a; /* Sin backdrop-filter: rompería el menú fijo que vive dentro del encabezado. */
     border-bottom: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
 }
 
 .barra {
@@ -244,6 +289,25 @@ h3 {
     margin-bottom: 0;
 }
 
+/* Imágenes que llenan su contenedor sin deformarse (cover).
+   Cada contenedor decide su proporción con --proporcion. */
+.paso img, .tarjeta-servicio img, .rejilla-galeria img {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: var(--proporcion, 1.4);
+}
+
+.paso { --proporcion: 1.45; }
+.tarjeta-servicio { --proporcion: 1.35; }
+.rejilla-galeria { --proporcion: 1.85; }
+.paso img { border-radius: 8px; }
+
+.rejilla-galeria img {
+    height: 100%;
+    min-height: 90px;
+    transition: transform 0.3s;
+}
+
 /* 6. Proceso: fondo crema para diferenciar esta sección. */
 .proceso {
     color: #1d1b17;
@@ -275,12 +339,6 @@ h3 {
     gap: 18px;
 }
 
-.paso img {
-    width: 100%;
-    aspect-ratio: 1.45 / 1;
-    object-fit: cover;
-    border-radius: 8px;
-}
 
 .numero {
     display: block;
@@ -331,11 +389,6 @@ h3 {
     border-radius: 9px;
 }
 
-.tarjeta-servicio img {
-    width: 100%;
-    aspect-ratio: 1.35 / 1;
-    object-fit: cover;
-}
 
 .tarjeta-servicio div {
     padding: 12px;
@@ -389,14 +442,6 @@ h3 {
     background: #202629;
 }
 
-.rejilla-galeria img {
-    width: 100%;
-    height: 100%;
-    min-height: 90px;
-    aspect-ratio: 1.85 / 1;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
 
 .rejilla-galeria a:hover img {
     transform: scale(1.05);
@@ -581,17 +626,29 @@ h3 {
     resize: vertical;
 }
 
-.boton-enviar {
-    width: 100%;
-    border-radius: 4px;
-    font-size: 12px;
-    padding: 9px;
+/* Pareja de botones (WhatsApp / Correo) y mensaje de estado */
+.acciones {
+    display: flex;
+    gap: 10px;
 }
+
+.acciones .boton { flex: 1; }
 
 .formulario small {
     color: #999f9f;
     font-size: 10px;
+    margin-top: 4px;
 }
+
+.estado {
+    min-height: 16px;
+    margin: 2px 0 0;
+    font-size: 11px;
+    color: var(--texto-suave);
+}
+
+.estado.exito { color: #7fd99a; }
+.estado.error { color: #ff8f85; }
 
 /* 12. Pie de página */
 .pie {

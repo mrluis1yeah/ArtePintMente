@@ -11,13 +11,16 @@ ArtePintMente/
   Imagenes/iconos/            Iconos SVG.
   Imagenes/Obras/             Obras de galería y fotos de servicios.
   Imagenes/Perfil_testimonio/ Retratos ilustrados de ejemplo.
-  Js/script.js                Archivo vacío de funciones.
+  Js/script.js                Contacto: botones de WhatsApp y Correo (index y galería).
+  Js/galeria.js               Lista de obras y ventana de detalle.
+  api/enviar.js               Función del servidor que envía el correo (Resend).
+  package.json                Dependencias del servidor (solo resend).
   Notas_Locas.txt             Estas notas.
 
 3. IMPORTANTE: CAMBIAR EL WHATSAPP
 Busca en index.html esta dirección:
-  https://wa.me/573001234567
-Reemplaza 573001234567 por el número real con indicativo del país, solo números.
+  https://wa.me/573227919305
+Reemplaza 573227919305 por el número real con indicativo del país, solo números.
 Ejemplo ficticio: 573001112233. No uses +, espacios ni guiones.
 
 4. CAMBIAR NOMBRE, TELÉFONO, CORREO Y UBICACIÓN
@@ -72,12 +75,22 @@ Ejemplo ficticio: 573001112233. No uses +, espacios ni guiones.
 - Antes de publicar, pide permiso para usar las fotos y opiniones de tus clientes.
 - Los nombres y opiniones que vienen en la maqueta son ejemplos, no testimonios verificados.
 
-10. FORMULARIO DE CONTACTO
-- El formulario es visual; no almacena ni envía la información.
-- El botón "Continuar por WhatsApp" abre el chat de WhatsApp indicado en el enlace.
-- Para una página sencilla, puedes pedir que escriban directamente por WhatsApp.
-- Si más adelante necesitas enviar el contenido del formulario automáticamente, se requiere
-  programación adicional o un servicio externo. El archivo script.js está vacío a propósito.
+10. FORMULARIO DE CONTACTO (WhatsApp y correo)
+- El formulario del index y la ventana de cada obra en la galería tienen dos botones:
+  WhatsApp (abre el chat con el mensaje escrito) y Correo (envía el mensaje a tu correo).
+- Ambos usan Js/script.js. Cualquier <form class="formulario"> con campos nombre, correo y
+  mensaje, y botones con data-canal="whatsapp" o data-canal="correo", funciona solo.
+- El número de WhatsApp de los mensajes está al inicio de Js/script.js (numeroWhatsApp).
+- En la galería, el mensaje de cada obra se arma en Js/galeria.js.
+
+CONFIGURAR EL ENVÍO POR CORREO (solo funciona publicado en Vercel, no abriendo el archivo)
+1. Crea una cuenta en resend.com y copia tu API Key.
+2. En Vercel > Settings > Environment Variables agrega:
+     RESEND_API_KEY   la clave de Resend
+     DESTINO_EMAIL    el correo donde quieres recibir los mensajes
+     REMITENTE_EMAIL  quien aparece como remitente, por ejemplo: ArtePintMente <web@tudominio.com>
+                      (para pruebas sirve onboarding@resend.dev, que solo entrega a tu correo de Resend)
+3. Publica de nuevo el proyecto. Al responder el correo recibido, la respuesta va al visitante.
 
 11. RESPONSIVE DESIGN
 - El CSS usa Flexbox y CSS Grid para ordenar los elementos.

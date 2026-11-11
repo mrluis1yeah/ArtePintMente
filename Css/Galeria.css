@@ -1,399 +1,150 @@
 /* ==========================================
    ESTILOS DE LA GALERÍA DE ARTEPINTMENTE
+   Reutiliza clases de Estilos.css:
+   .titulo-con-enlace, .tarjeta-servicio y .formulario
 ========================================== */
 
-
 /* PORTADA */
-
 .galeria-portada {
-
     padding: 65px 0;
-
-    background:
-        linear-gradient(
-            rgba(3, 15, 20, 0.85),
-            rgba(3, 15, 20, 0.85)
-        ),
-        url("../Imagenes/seccion_1_Bg.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
     text-align: center;
-
+    background: linear-gradient(rgba(3,15,20,0.85), rgba(3,15,20,0.85)), url("../Imagenes/seccion_1_Bg.jpg") center / cover;
 }
 
 .galeria-portada h1 {
-
-    font-family: Georgia, serif;
-
     font-size: clamp(32px, 5vw, 48px);
-
     margin-bottom: 15px;
-
 }
 
-.galeria-portada p:not(.sobretitulo) {
+.galeria-portada p:not(.sobretitulo) { color: #d0d0d0; }
 
-    color: #d0d0d0;
-
-}
-
-
-/* CONTENIDO DE GALERÍA */
-
-.contenido-galeria {
-
-    padding-top: 45px;
-
-    padding-bottom: 60px;
-
-}
-
-.galeria-titulo {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 25px;
-
-}
-
-.galeria-titulo h2 {
-
-    margin-bottom: 0;
-
-}
+/* CONTENIDO */
+.contenido-galeria { padding: 45px 0 60px; }
+.contenido-galeria .titulo-con-enlace { margin-bottom: 25px; }
 
 #cantidadObras {
-
-    color: #e9a24b;
-
+    margin: 0 0 6px;
+    color: var(--dorado);
     font-size: 13px;
-
 }
 
-
-/* REJILLA DE OBRAS */
-
+/* REJILLA Y TARJETAS: cada tarjeta es una .tarjeta-servicio con efecto extra */
 .rejilla-obras {
-
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
-
     gap: 20px;
-
 }
-
-
-/* TARJETAS */
 
 .tarjeta-obra {
-
-    background: #172126;
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
+    --proporcion: 1;
     cursor: pointer;
-
-    transition: transform 0.3s, border 0.3s;
-
+    transition: transform 0.3s, border-color 0.3s;
 }
 
 .tarjeta-obra:hover {
-
     transform: translateY(-6px);
-
-    border-color: #e9a24b;
-
+    border-color: var(--dorado);
 }
 
-.tarjeta-obra img {
+.tarjeta-obra h3 { font-size: 16px; margin-bottom: 8px; }
+.tarjeta-obra p { font-size: 12px; margin-bottom: 10px; }
 
-    width: 100%;
-
-    aspect-ratio: 1 / 1;
-
-    object-fit: cover;
-
-}
-
-.datos-tarjeta {
-
-    padding: 15px;
-
-}
-
-.datos-tarjeta h3 {
-
-    font-size: 16px;
-
-    margin-bottom: 8px;
-
-}
-
-.datos-tarjeta p {
-
-    color: #c0c0c0;
-
-    font-size: 12px;
-
-    margin-bottom: 10px;
-
-}
-
-.precio-tarjeta {
-
-    color: #f0ad59;
-
+/* Precio: se usa en la tarjeta y en la ventana de detalle */
+.precio {
+    color: #f2ae58;
     font-size: 14px;
-
     font-weight: bold;
-
 }
 
-
-/* OVERLAY: FONDO OSCURO DE LA VENTANA */
-
+/* VENTANA EMERGENTE (se muestra al añadir la clase "activo") */
 .overlay {
-
     display: none;
-
     position: fixed;
-
-    top: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    background: rgba(0,0,0,0.85);
-
+    inset: 0;
     z-index: 100;
-
     justify-content: center;
-
     align-items: center;
-
     padding: 20px;
-
+    background: rgba(0,0,0,0.85);
 }
 
-
-/* Cuando JavaScript añade esta clase, aparece el overlay */
-
-.overlay.activo {
-
-    display: flex;
-
-}
-
-
-/* VENTANA CON LOS DETALLES */
+.overlay.activo { display: flex; }
 
 .ventana-obra {
-
     position: relative;
-
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
-    max-width: 850px;
-
     width: 100%;
-
+    max-width: 850px;
     max-height: 90vh;
-
     overflow-y: auto;
-
     background: #111e24;
-
     border: 1px solid rgba(233,162,75,0.5);
-
     border-radius: 12px;
-
 }
 
-
-/* IMAGEN DEL DETALLE */
-
+/* La imagen llena todo su lado (cover), sea cual sea su proporción */
 .imagen-detalle {
-
+    position: relative;
+    min-height: 320px;
     background: #080f13;
-
 }
 
 .imagen-detalle img {
-
+    position: absolute;
+    inset: 0;
     width: 100%;
-
     height: 100%;
-
-    min-height: 350px;
-
-    max-height: 550px;
-
-    object-fit: contain;
-
+    object-fit: cover;
 }
-
-
-/* INFORMACIÓN */
 
 .informacion-obra {
-
-    padding: 35px;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
+    padding: 35px;
 }
 
-.informacion-obra h2 {
+.informacion-obra h2 { font-size: 30px; }
 
-    font-family: Georgia, serif;
-
-    font-size: 30px;
-
-}
-
-.informacion-obra > p:not(.sobretitulo):not(.precio-detalle) {
-
+.informacion-obra > p:not(.sobretitulo):not(.precio) {
     color: #d0d0d0;
-
     line-height: 1.7;
-
 }
 
-.precio-detalle {
-
-    color: #f2ae58;
-
+.informacion-obra .precio {
     font-size: 23px;
-
-    font-weight: bold;
-
-    margin: 15px 0 25px;
-
+    margin: 12px 0 18px;
 }
-
-
-/* BOTÓN PARA CERRAR */
 
 .cerrar-overlay {
-
     position: absolute;
-
     top: 10px;
-
     right: 15px;
-
     z-index: 2;
-
     background: transparent;
-
     color: white;
-
     border: none;
-
     font-size: 35px;
-
     cursor: pointer;
-
+    transition: color 0.2s, transform 0.2s;
 }
 
+.cerrar-overlay:hover { color: #f2ae58; transform: rotate(90deg); }
 
-/* EFECTO DEL BOTÓN */
-
-.cerrar-overlay:hover {
-
-    color: #f2ae58;
-
-}
-
-
-/* RESPONSIVE DESIGN */
-
-
-/* Tabletas */
-
+/* RESPONSIVE */
 @media (max-width: 900px) {
-
-    .rejilla-obras {
-
-        grid-template-columns: repeat(3, 1fr);
-
-    }
-
+    .rejilla-obras { grid-template-columns: repeat(3, 1fr); }
 }
-
-
-/* Móviles */
 
 @media (max-width: 600px) {
-
-    .rejilla-obras {
-
-        grid-template-columns: repeat(2, 1fr);
-
-        gap: 12px;
-
-    }
-
-    .ventana-obra {
-
-        grid-template-columns: 1fr;
-
-        max-width: 430px;
-
-    }
-
-    .imagen-detalle img {
-
-        min-height: 220px;
-
-        max-height: 300px;
-
-    }
-
-    .informacion-obra {
-
-        padding: 22px;
-
-    }
-
-    .informacion-obra h2 {
-
-        font-size: 25px;
-
-    }
-
+    .rejilla-obras { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .ventana-obra { grid-template-columns: 1fr; max-width: 430px; }
+    .imagen-detalle { min-height: 230px; }
+    .informacion-obra { padding: 22px; }
+    .informacion-obra h2 { font-size: 25px; }
 }
 
-
-/* Teléfonos muy pequeños */
-
 @media (max-width: 360px) {
-
-    .rejilla-obras {
-
-        grid-template-columns: 1fr;
-
-    }
-
+    .rejilla-obras { grid-template-columns: 1fr; }
 }

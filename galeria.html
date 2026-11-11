@@ -48,7 +48,7 @@
             </nav>
 
             <a class="boton boton-borde"
-               href="https://wa.me/573001234567"
+               href="https://wa.me/573227919305"
                target="_blank">
 
                 Escríbenos
@@ -84,25 +84,13 @@
 
     <main class="contenedor contenido-galeria">
 
-        <div class="galeria-titulo">
-
-            <div>
-
-                <p class="sobretitulo">ARTE HECHO CON PASIÓN</p>
-
-                <h2>Nuestras obras</h2>
-
-            </div>
-
+        <div class="titulo-con-enlace">
+            <div><p class="sobretitulo">ARTE HECHO CON PASIÓN</p><h2>Nuestras obras</h2></div>
             <!-- Aquí JavaScript mostrará cuántas obras existen -->
-
             <p id="cantidadObras"></p>
-
         </div>
 
-
         <!-- JavaScript colocará las tarjetas aquí -->
-
         <div class="rejilla-obras" id="contenedorObras">
 
         </div>
@@ -118,7 +106,7 @@
 
             <!-- Botón para cerrar la ventana -->
 
-            <button class="cerrar-overlay" id="cerrarOverlay">
+            <button class="cerrar-overlay" id="cerrarOverlay" aria-label="Cerrar">
                 &times;
             </button>
 
@@ -142,17 +130,23 @@
 
                 <p id="descripcionDetalle"></p>
 
-                <p class="precio-detalle" id="precioDetalle"></p>
+                <p class="precio" id="precioDetalle"></p>
 
-
-                <!-- Botón que genera el mensaje personalizado -->
-
-                <button class="boton boton-dorado"
-                        id="botonConsultar">
-
-                    Consultar por WhatsApp →
-
-                </button>
+                <!-- Mensaje prefabricado (lo rellena galeria.js) + dos canales de contacto.
+                     WhatsApp lleva formnovalidate: no exige nombre ni correo. Correo sí. -->
+                <form class="formulario" id="formularioObra">
+                    <input type="hidden" name="mensaje">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="100" placeholder="Escribe tu nombre" required>
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="correo" maxlength="150" placeholder="Escribe tu correo" required>
+                    <small>Para el correo necesitamos tus datos; por WhatsApp puedes escribir directo.</small>
+                    <div class="acciones">
+                        <button class="boton boton-dorado" data-canal="whatsapp" formnovalidate><img src="Imagenes/iconos/icon_whatsapp.svg" alt="" class="icono-boton"> WhatsApp</button>
+                        <button class="boton boton-borde" data-canal="correo"><img src="Imagenes/iconos/icon_correo.svg" alt="" class="icono-boton"> Correo</button>
+                    </div>
+                    <p class="estado" role="status" aria-live="polite"></p>
+                </form>
 
             </div>
 
@@ -176,7 +170,7 @@
             <p>© 2026 ArtePintMente. Todos los derechos reservados.</p>
 
             <a class="whatsapp-pie"
-               href="https://wa.me/573001234567"
+               href="https://wa.me/573227919305"
                target="_blank">
 
                 WhatsApp
@@ -190,6 +184,7 @@
 
     <!-- ARCHIVO JAVASCRIPT DE LA GALERÍA -->
 
+    <script src="Js/script.js"></script>
     <script src="Js/galeria.js"></script>
 
 </body>
