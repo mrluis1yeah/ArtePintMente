@@ -1,50 +1,85 @@
-// ========================================
-// CONTACTO DE ARTEPINTMENTE (index y galería)
-// Cualquier <form class="formulario"> con campos nombre, correo y mensaje
-// y dos botones [data-canal="whatsapp"] / [data-canal="correo"] funciona solo.
-// ========================================
+// =====================================================
+// CONTACTO DE ARTEPINTMENTE
+// Los formularios permiten elegir WhatsApp o correo.
+// WhatsApp abre el chat con el mensaje redactado.
+// El correo usa /api/enviar cuando el proyecto está desplegado
+// en un servidor que tenga esa ruta configurada.
+// =====================================================
 
-// Número de WhatsApp de la emprendedora (con indicativo del país, solo números).
 const numeroWhatsApp = "573227919305";
+const correoDestino = "artepintmente@gmail.com";
 
 document.querySelectorAll("form.formulario").forEach((formulario) => {
     const estado = formulario.querySelector(".estado");
+    if (!estado) return;
 
-    const mostrar = (texto, tipo = "") => {
+    const mostrarEstado = (texto, tipo = "") => {
         estado.textContent = texto;
-        estado.className = "estado " + tipo;
+        estado.className = `estado ${tipo}`.trim();
     };
 
-    // e.submitter es el botón que se pulsó: así sabemos el canal elegido.
-    formulario.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const boton = e.submitter;
-        const { nombre, correo, mensaje } = Object.fromEntries(new FormData(formulario));
+    formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
 
-        // WhatsApp: abre el chat con el mensaje ya escrito.
-        if (boton.dataset.canal === "whatsapp") {
-            const texto = `¡Hola! Buen día${nombre ? `, soy ${nombre}` : ""}.\n\n${mensaje}${correo ? `\n\nMi correo: ${correo}` : ""}`;
-            window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(texto)}`, "_blank");
+        const boton = evento.submitter;
+        if (!boton || !boton.dataset.canal) return;
+
+        const datos = new FormData(formulario);
+        const nombre = String(datos.get("nombre") || "").trim();
+        const correo = String(datos.get("correo") || "").trim();
+        const mensaje = String(datos.get("mensaje") || "").trim();
+
+        if (!mensaje) {
+            mostrarEstado("Escribe un mensaje antes de continuar.", "error");
             return;
         }
 
-        // Correo: lo envía la función del servidor /api/enviar.
-        boton.disabled = true;
-        mostrar("Enviando tu mensaje...", "info");
+        if (boton.dataset.canal === "whatsapp") {
+            const texto = [
+                `Hola, ArtePintMente. Soy ${nombre || "una persona interesada"}.`,
+                mensaje,
+                correo ? `Mi correo de contacto es: ${correo}` : ""
+            ].filter(Boolean).join("\n\n");
 
-        const respuesta = await fetch("/api/enviar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, correo, mensaje })
-        }).then((r) => r.json()).catch(() => null);
+            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(texto)}`;
+            window.open(url, "_blank", "noopener,noreferrer");
+            mostrarEstado("Se abrió WhatsApp con tu mensaje preparado. Revísalo y pulsa enviar allí.", "exito");
+            return;
+        }
 
-        const enviado = respuesta?.success;
-        mostrar(
-            enviado ? "¡Listo! Recibimos tu mensaje y te responderemos pronto."
-                    : respuesta?.message || "No pudimos enviarlo. Inténtalo de nuevo o escríbenos por WhatsApp.",
-            enviado ? "exito" : "error"
-        );
-        if (enviado) formulario.reset();
-        boton.disabled = false;
+        if (boton.dataset.canal === "correo") {
+            if (!nombre || !correo) {
+                mostrarEstado("Completa tu nombre y correo para continuar por este medio.", "error");
+                return;
+            }
+
+            boton.disabled = true;
+            mostrarEstado("Preparando el correo...", "");
+
+            // Se intenta el endpoint del proyecto. Si no está disponible (por ejemplo,
+            // al abrir el HTML directamente), se ofrece el correo mediante mailto.
+            try {
+                const respuesta = await fetch("/api/enviar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre, correo, mensaje })
+                });
+
+                const resultado = await respuesta.json();
+                if (!respuesta.ok || !resultado.success) {
+                    throw new Error(resultado.message || "No fue posible enviar desde el servidor.");
+                }
+
+                mostrarEstado("¡Mensaje enviado! Gracias por contactar a ArtePintMente.", "exito");
+                formulario.reset();
+            } catch (error) {
+                const asunto = encodeURIComponent("Consulta desde ArtePintMente");
+                const cuerpo = encodeURIComponent(`Nombre: ${nombre}\nCorreo: ${correo}\n\n${mensaje}`);
+                window.location.href = `mailto:${correoDestino}?subject=${asunto}&body=${cuerpo}`;
+                mostrarEstado("Se abrió tu aplicación de correo con el mensaje preparado. Solo falta enviarlo.", "exito");
+            } finally {
+                boton.disabled = false;
+            }
+        }
     });
 });
