@@ -360,7 +360,7 @@ h3 {
 
 /* 7. Servicios */
 .servicios {
-    background-image: linear-gradient(rgba(3,16,22,0.88), rgba(3,16,22,0.91)), url("../Imagenes/seccion_2_Bg.jpg");
+    background-image: linear-gradient(rgba(3,16,22,0.88), rgba(3,16,22,0.91));
 }
 
 .servicios-contenido {
@@ -508,7 +508,7 @@ h3 {
 
 /* 10. Consejos */
 .consejos {
-    background: #241b14 url("../Imagenes/seccion_5_Bg.jpg") center / cover no-repeat;
+    background: #241b14 center / cover no-repeat;
     border-top: 1px solid rgba(255,255,255,0.1);
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
