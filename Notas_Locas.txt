@@ -1,0 +1,124 @@
+ARTEPINTMENTE - NOTAS PARA MODIFICAR LA PÁGINA
+================================================
+
+
+1. ESTRUCTURA DE CARPETAS
+ArtePintMente/
+  index.html                  Estructura y textos de la página.
+  Css/Estilos.css             Colores, tamaños, distribución y responsive.
+  Imagenes/logo.svg           Logo editable como SVG.
+  Imagenes/seccion_*_Bg.jpg   Fondos usados por las secciones.
+  Imagenes/iconos/            Iconos SVG.
+  Imagenes/Obras/             Obras de galería y fotos de servicios.
+  Imagenes/Perfil_testimonio/ Retratos ilustrados de ejemplo.
+  Js/script.js                Contacto: botones de WhatsApp y Correo (index y galería).
+  Js/menu.js                  Menú hamburguesa de la barra inferior (aria-expanded, Escape, clic fuera).
+  Js/galeria.js               Lista de obras y ventana de detalle.
+  api/enviar.js               Función del servidor que envía el correo (Resend).
+  package.json                Dependencias del servidor (solo resend).
+  Notas_Locas.txt             Estas notas.
+
+3. IMPORTANTE: CAMBIAR EL WHATSAPP
+Busca en index.html esta dirección:
+  https://wa.me/573227919305
+Reemplaza 573227919305 por el número real con indicativo del país, solo números.
+Ejemplo ficticio: 573001112233. No uses +, espacios ni guiones.
+
+4. CAMBIAR NOMBRE, TELÉFONO, CORREO Y UBICACIÓN
+
+- Cambia el contenido entre las etiquetas, sin borrar las etiquetas HTML.
+- Los teléfonos, el correo, la ciudad y los testimonios
+- Cambia los testimonios por opiniones reales antes de publicar.
+
+5. AÑADIR O CAMBIAR UNA OBRA DE LA GALERÍA
+- Copia una imagen JPG, PNG o WebP a Imagenes/Obras/.
+- Ponle un nombre simple, por ejemplo mi_obra_nueva.jpg.
+- En index.html, busca la sección con class="rejilla-galeria".
+- Copia uno de los bloques <a>...</a> y cambia las rutas de la imagen y el texto alt.
+- Para que una obra ocupe un bloque grande (2x2) en el mosaico, añade class="destacada" al <a>.
+  Úsalo SOLO con fotos de alta resolución (1000 px de ancho o más); con fotos pequeñas se verían pixeladas.
+- Ejemplo:
+  <a href="Imagenes/Obras/mi_obra_nueva.jpg" target="_blank">
+    <img src="Imagenes/Obras/mi_obra_nueva.jpg" alt="Descripción de la obra">
+  </a>
+- El texto alt describe la imagen para lectores de pantalla y cuando no carga.
+- Si borras una obra, borra el bloque <a> completo que la contiene.
+- Las imágenes incluidas aquí se recortaron de la captura que compartiste como referencia.
+  Sustitúyelas por fotos originales de las obras reales para obtener el mejor resultado.
+
+6. CAMBIAR LOS FONDOS
+- Los fondos están en Imagenes/seccion_1_Bg.jpg hasta seccion_5_Bg.jpg.
+- Puedes reemplazarlos por otras imágenes conservando exactamente el mismo nombre.
+- Si prefieres cambiar el archivo de nombre, actualiza la ruta en Css/Estilos.css.
+- La sección de portada usa seccion_1_Bg.jpg.
+- Las secciones oscuras reutilizan seccion_2_Bg.jpg.
+- La sección de proceso usa seccion_3_Bg.jpg.
+- Consejos usa seccion_5_Bg.jpg.
+- Los fondos se oscurecen con capas CSS para que el texto sea legible.
+
+7. CAMBIAR COLORES Y LETRAS
+- Abre Css/Estilos.css.
+- Al principio busca :root.
+- --fondo es el color oscuro principal.
+- --dorado es el color dorado de los detalles.
+- --dorado-claro es el dorado de los botones.
+- --texto es el color principal del texto.
+- Cambia los códigos hexadecimales (por ejemplo #e9a24b) por el color que quieras.
+- Las cabeceras usan Georgia y el texto general usa Arial para mantenerlo simple.
+
+8. MODIFICAR SERVICIOS O PASOS DEL PROCESO
+- Busca en index.html "NUESTROS SERVICIOS" o "EL PROCESO".
+- Edita el título, la descripción y el texto de cada tarjeta.
+- Para cambiar las fotos, modifica el valor de src en la etiqueta img.
+- Mantén la ruta relativa desde index.html: Imagenes/Obras/nombre.jpg.
+
+9. CAMBIAR TESTIMONIOS Y FOTOS DE PERFIL
+- Los perfiles de ejemplo están en Imagenes/Perfil_testimonio/.
+- Puedes reemplazar los SVG por fotos reales, pero actualiza el src en index.html.
+- Antes de publicar, pide permiso para usar las fotos y opiniones de tus clientes.
+- Los nombres y opiniones que vienen en la maqueta son ejemplos, no testimonios verificados.
+
+10. FORMULARIO DE CONTACTO (WhatsApp y correo)
+- El formulario del index y la ventana de cada obra en la galería tienen dos botones:
+  WhatsApp (abre el chat con el mensaje escrito) y Correo (envía el mensaje a tu correo).
+- Ambos usan Js/script.js. Cualquier <form class="formulario"> con campos nombre, correo y
+  mensaje, y botones con data-canal="whatsapp" o data-canal="correo", funciona solo.
+- El número de WhatsApp de los mensajes está al inicio de Js/script.js (numeroWhatsApp).
+- En la galería, el mensaje de cada obra se arma en Js/galeria.js.
+
+CONFIGURAR EL ENVÍO POR CORREO (solo funciona publicado en Vercel, o con "npx vercel dev" en tu PC)
+1. Crea una cuenta en resend.com y copia tu API Key (empieza por re_).
+2. En Vercel > Settings > Environment Variables agrega las 3 (sin comillas) y marca Production:
+     RESEND_API_KEY   la clave de Resend
+     DESTINO_EMAIL    el correo donde quieres recibir los mensajes
+     REMITENTE_EMAIL  quien aparece como remitente, por ejemplo: ArtePintMente <web@tudominio.com>
+                      (para pruebas sirve onboarding@resend.dev, PERO solo entrega al correo con el que
+                       te registraste en Resend; para recibir en otro correo hay que verificar un dominio)
+3. Vuelve a publicar (Redeploy): las variables nuevas no se aplican a despliegues anteriores.
+4. COMPRUEBA: abre https://TU-SITIO/api/enviar en el navegador. Te dice si el envío está configurado
+   o qué variable falta (nunca muestra los valores).
+5. Si algo falla, el motivo exacto queda en Vercel > Logs (busca "[enviar]"). Al visitante se le muestra
+   un mensaje claro; ya no se abre su programa de correo cuando el servidor falla.
+   El programa de correo (mailto) solo se abre si la página NO tiene la función /api/enviar
+   (por ejemplo, abriendo el HTML directamente o en un hosting estático como GitHub Pages).
+Al responder el correo recibido, la respuesta va al visitante.
+
+11. DISEÑO FLUIDO (RESPONSIVE)
+- Los tamaños de letra y los espacios usan clamp(): crecen y se encogen suavemente. Están en :root
+  de Css/Estilos.css (--fs-xs ... --fs-h1, --gap, --seccion, --gutter). Cámbialos ahí.
+- Las rejillas se reacomodan solas según el espacio que tienen (auto-fit/auto-fill + @container).
+  No hay "puntos de quiebre" por dispositivo para las tarjetas.
+- Solo quedan 3 @media: el menú hamburguesa (max-width: 40em), el velo de la portada y ocultar el
+  botón flotante de WhatsApp en pantallas diminutas.
+- El menú inferior ("caballete") es una lista <ul> en el HTML; para añadir un enlace agrega un <li>.
+  Sin JavaScript la navegación sigue visible; con JavaScript y poco ancho se pliega en un botón "Menú".
+- La ventana de cada obra es un <dialog> nativo: Escape, foco atrapado y retorno de foco ya vienen incluidos.
+
+12. ANTES DE PUBLICAR
+- Cambia el WhatsApp de ejemplo.
+- Revisa teléfono, correo, ubicación y textos.
+- Sustituye las imágenes recortadas de la captura por las obras originales.
+- Comprueba que tienes permiso para publicar fotos y testimonios.
+- Prueba index.html en una pantalla grande y en un móvil.
+- Esta carpeta es una página estática. Para que otras personas la visiten por internet,
+  tendrás que subirla a un servicio de alojamiento web.
