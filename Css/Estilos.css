@@ -1,0 +1,391 @@
+/* ==========================================================
+   ARTEPINTMENTE · Estilos fluidos (Fluid Web Design + WCAG)
+   ----------------------------------------------------------
+   Filosofía: el diseño se adapta SOLO por su contenido.
+   · Tipografía y espacios con clamp() → escalan sin saltos.
+   · Rejillas con auto-fit/minmax() y @container → se reacomodan
+     según el espacio real que tienen, no según el dispositivo.
+   · Solo 2 @media en todo el archivo (menú hamburguesa y velo
+     de la portada); el resto es intrínseco.
+   ========================================================== */
+
+/* 1. TOKENS ------------------------------------------------ */
+:root {
+    color-scheme: dark;
+
+    /* Colores (edita aquí) */
+    --fondo: #07151b;
+    --dorado: #e9a24b;
+    --dorado-claro: #ffc16a;
+    --texto: #f8f2e9;
+    --texto-suave: #c6c3bd;
+    --crema: #eee0c8;
+    --madera: #3b2922;
+
+    /* Tipografía fluida: mínimo legible → máximo cómodo */
+    --fs-xs: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+    --fs-s:  clamp(0.875rem, 0.85rem + 0.15vw, 0.95rem);
+    --fs-m:  clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
+    --fs-h3: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+    --fs-h2: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    --fs-h1: clamp(1.625rem, 0.9rem + 3.4vw, 3.75rem);
+
+    /* Espaciado fluido */
+    --gutter: clamp(0.75rem, 4vw, 2.5rem);  /* margen lateral de la página */
+    --gap:    clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+    --seccion: clamp(1.75rem, 1rem + 3vw, 4rem); /* aire vertical de cada sección */
+    --radio: 0.5625rem;
+    --max: 90rem; /* tope del contenido: respira en monitores ultrawide */
+}
+
+/* 2. BASE -------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+    /* El rem crece suavemente en pantallas grandes (sin romper el zoom del usuario) */
+    font-size: clamp(100%, 0.8rem + 0.35vw, 1.5rem);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;          /* el encabezado fijo no tapa los anclas */
+    scrollbar-gutter: stable;
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+html:has(dialog[open]) { overflow: hidden; } /* bloquea el scroll bajo la ventana modal */
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--fondo);
+    color: var(--texto);
+    font: var(--fs-m)/1.55 Arial, Helvetica, sans-serif;
+    overflow-wrap: break-word;                       /* cero desbordes por palabras largas */
+    /* espacio para que la barra fija inferior no tape el pie */
+    padding-block-end: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Los hijos de flex/grid pueden encogerse por debajo de su contenido */
+:where(header, main, footer) * { min-width: 0; }
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin-block: 0 0.6em; }
+p { text-wrap: pretty; }
+
+h1, h2, h3 { hyphens: auto; text-wrap: balance; }
+h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: normal; line-height: 1.1; }
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); margin-bottom: 0.45em; }
+h3 { font-size: var(--fs-h3); font-weight: normal; line-height: 1.25; }
+
+.sobretitulo {
+    color: var(--dorado);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+.texto-oscuro { color: #6b4519; } /* contraste AA sobre fondo crema */
+
+/* Foco visible para teclado en TODO elemento interactivo */
+:focus-visible { outline: 3px solid var(--dorado-claro); outline-offset: 3px; }
+
+/* Enlace "saltar al contenido": aparece solo al tabular */
+.saltar {
+    position: absolute; z-index: 2000; inset-block-start: 0.5rem; inset-inline-start: 0.5rem;
+    padding: 0.75rem 1rem; background: var(--dorado-claro); color: #17130d; font-weight: bold;
+    border-radius: 0.5rem; transform: translateY(-200%);
+}
+.saltar:focus { transform: none; }
+
+/* Contenedor: ancho fluido con márgenes y un tope */
+.contenedor { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
+
+/* 3. BOTONES ----------------------------------------------- */
+.boton {
+    position: relative; overflow: hidden;
+    display: inline-flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+    min-block-size: 2.75rem;            /* objetivo táctil ≥ 44px */
+    max-inline-size: 100%;
+    padding: 0.6rem clamp(0.9rem, 0.6rem + 1.5vw, 1.5rem);
+    border-radius: 2rem;
+    font: inherit; font-size: var(--fs-s); font-weight: bold; line-height: 1.2; text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+.boton::after { /* destello al pasar el cursor */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.45) 50%, transparent 65%);
+    transform: translateX(-120%); transition: transform 0.6s;
+}
+.boton:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(233,162,75,0.4); }
+.boton:hover::after { transform: translateX(120%); }
+.boton:active { transform: scale(0.96); box-shadow: none; }
+.boton:disabled { opacity: 0.6; pointer-events: none; }
+.boton span { transition: transform 0.2s; }
+.boton:hover span { transform: translateX(5px); }
+
+.boton-dorado { color: #17130d; background: linear-gradient(135deg, var(--dorado-claro), var(--dorado)); border: 1px solid var(--dorado-claro); }
+.boton-dorado:hover { background: linear-gradient(135deg, #fff0d6, var(--dorado-claro)); }
+.boton-borde { color: var(--dorado-claro); border: 1px solid var(--dorado); background: transparent; }
+.boton-borde:hover { color: #17130d; background: var(--dorado-claro); }
+.boton-borde:hover [src$="correo.svg"] { filter: brightness(0); }
+.icono-boton { width: 1.1em; height: 1.1em; flex: none; }
+
+.portada .boton-dorado { animation: latido 2.6s infinite; }
+.portada .boton-dorado:hover { animation: none; }
+@keyframes latido {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,193,106,0.55); }
+    60% { box-shadow: 0 0 0 14px rgba(255,193,106,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .boton, .boton::after, .boton span { transition: none; }
+    .portada .boton-dorado { animation: none; }
+}
+
+/* 4. ENCABEZADO (logo + botón). La navegación vive en la barra-caballete */
+.encabezado {
+    position: sticky; top: 0; z-index: 50;
+    background: #06131a;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+/* En pantallas muy bajas (móvil horizontal, relojes) no robes altura */
+@media (max-height: 30rem) { .encabezado { position: static; } }
+
+.barra {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 0.5rem 1rem; padding-block: 0.5rem; min-height: 4rem;
+}
+.marca { flex: 0 1 auto; width: clamp(7rem, 22vw, 12rem); }
+.marca img { width: 100%; }
+
+/* 5. BARRA-CABALLETE (navegación) -------------------------
+   Escritorio: barra de madera con los enlaces en fila.
+   Estrecho (≤40em): se pliega en un botón "Menú" y el panel
+   se despliega hacia arriba, como un caballete.
+   Sin JavaScript: los enlaces simplemente se reparten en filas. */
+.caballete {
+    position: fixed; z-index: 1000; isolation: isolate;
+    inset-inline: 0; margin-inline: auto;
+    bottom: max(0.875rem, env(safe-area-inset-bottom, 0px));
+    width: min(40rem, 100% - 1.5rem);
+    background: var(--madera);
+    border: 1px solid #795548;
+    border-radius: 1rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+.caballete::after { /* pie del caballete */
+    content: ""; position: absolute; z-index: -1; bottom: -0.55rem; left: 45%;
+    width: 10%; height: 0.75rem; background: #b08968;
+    clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+}
+.caballete__lista {
+    list-style: none; margin: 0; padding: 0.375rem;
+    display: flex; flex-wrap: wrap; justify-content: space-around; gap: 0.25rem;
+}
+.caballete__lista a {
+    display: flex; align-items: center; justify-content: center;
+    min-block-size: 2.75rem; padding: 0.4rem clamp(0.5rem, 0.2rem + 1.4vw, 0.9rem);
+    color: #f0e5d8; font-size: var(--fs-s); border-radius: 0.5rem;
+    transition: color 0.2s, background 0.2s;
+}
+.caballete__lista a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.caballete__lista a[aria-current="page"] { color: var(--dorado-claro); box-shadow: inset 0 -2px currentColor; }
+.caballete :focus-visible { outline-offset: -3px; }
+
+.caballete__boton { display: none; }  /* solo existe cuando hay JS y poco ancho */
+
+@media (max-width: 40em) {
+    .js .caballete__boton {
+        display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+        width: 100%; min-block-size: 3rem; padding: 0.5rem 1rem;
+        background: none; border: 0; border-radius: 1rem; cursor: pointer;
+        color: #f0e5d8; font: inherit; font-size: var(--fs-m); font-weight: bold;
+    }
+    .caballete__icono line { transition: transform 0.25s, opacity 0.2s; transform-box: fill-box; transform-origin: center; }
+    .caballete__boton[aria-expanded="true"] .l1 { transform: translateY(6px) rotate(45deg); }
+    .caballete__boton[aria-expanded="true"] .l2 { opacity: 0; }
+    .caballete__boton[aria-expanded="true"] .l3 { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Panel plegado: display:none → los enlaces salen del orden de tabulación */
+    .js .caballete__lista {
+        display: none;
+        position: absolute; inset-inline: 0; bottom: calc(100% + 0.625rem);
+        flex-direction: column; justify-content: flex-start; gap: 0;
+        max-block-size: min(60dvh, 22rem); overflow-y: auto; overscroll-behavior: contain;
+        padding: 0.375rem; background: var(--madera);
+        border: 1px solid #795548; border-radius: 1rem; box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    .js .caballete[data-abierto] .caballete__lista { display: flex; animation: despliega 0.2s ease-out; }
+    .js .caballete__lista a { justify-content: flex-start; padding-inline: 1rem; }
+}
+@keyframes despliega { from { opacity: 0; transform: translateY(0.5rem); } }
+@media (prefers-reduced-motion: reduce) {
+    .caballete__icono line, .js .caballete[data-abierto] .caballete__lista { transition: none; animation: none; }
+}
+
+/* 6. PORTADA ----------------------------------------------- */
+.portada {
+    position: relative; display: grid; align-items: center;
+    min-height: clamp(20rem, 62dvh, 46rem);
+    background: #17201e url("../Imagenes/seccion_1_Bg.jpg") center 55% / cover no-repeat;
+}
+.velo { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(2,9,12,0.94), rgba(2,9,12,0.55) 48%, rgba(2,9,12,0.15)); }
+@media (max-width: 40em) { .velo { background: rgba(2,9,12,0.72); } } /* el texto ocupa todo el ancho */
+.portada-contenido { position: relative; z-index: 1; padding-block: var(--seccion); }
+.portada h1 { max-inline-size: 13em; margin-bottom: 0.4em; }
+.portada h1 span { color: var(--dorado-claro); }
+.texto-portada { max-inline-size: 38ch; color: #e1ddd5; margin-bottom: 1.25rem; text-wrap: balance; }
+
+/* 7. PATRONES REUTILIZABLES -------------------------------
+   Bloque "intro + rejilla": el texto y las tarjetas se colocan
+   en columnas cuando caben y se apilan cuando no (flex-basis). */
+.fondo-textura {
+    background: linear-gradient(rgba(4,17,23,0.87), rgba(4,17,23,0.9)), url("../Imagenes/seccion_2_Bg.jpg") center / cover;
+    background-color: var(--fondo);
+}
+.dos-columnas {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: var(--gap) calc(var(--gap) * 2);
+    padding-block: var(--seccion);
+}
+.dos-columnas > :first-child { flex: 1 1 16rem; }
+.dos-columnas > :last-child  { flex: 3 1 min(100%, 34rem); }
+
+/* Rejillas "sin huérfanos": 1 → 2 → 4 columnas (o 1 → 3) según el
+   ANCHO DEL PROPIO CONTENEDOR (@container), no el de la pantalla.
+   Así una tarjeta nunca queda sola en una fila rara. */
+.cuadricula-4, .cuadricula-3 { container-type: inline-size; }
+.cuadricula { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); }
+@container (min-width: 20rem) { .cuadricula-4 > .cuadricula { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (min-width: 40rem) { .cuadricula-4 > .cuadricula { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@container (min-width: 40rem) { .cuadricula-3 > .cuadricula { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Imágenes que rellenan su caja sin deformarse */
+.paso img, .tarjeta-servicio img { width: 100%; object-fit: cover; aspect-ratio: var(--proporcion, 1.4); }
+.paso { --proporcion: 1.45; }
+.tarjeta-servicio { --proporcion: 1.35; }
+
+/* 8. PRINCIPIOS -------------------------------------------- */
+.principios .dos-columnas > :first-child h2 { margin: 0; }
+.principio {
+    text-align: center; padding: 1rem 0.75rem;
+    border: 1px solid rgba(255,255,255,0.13); border-radius: var(--radio);
+    background: rgba(255,255,255,0.03);
+}
+.icono-grande { width: 2rem; height: 2rem; margin: 0 auto 0.6rem; }
+.principio p { color: var(--texto-suave); font-size: var(--fs-xs); margin: 0; text-wrap: balance; }
+
+/* 9. PROCESO (fondo crema) --------------------------------- */
+.proceso { color: #1d1b17; background: var(--crema); }
+.introduccion p:not(.sobretitulo) { font-size: var(--fs-s); }
+.paso img { border-radius: 0.5rem; }
+.numero { display: block; margin-top: 0.5rem; color: #7a5320; font-size: var(--fs-xs); font-weight: bold; }
+.paso h3 { font-weight: bold; margin-bottom: 0.25rem; }
+.paso p { font-size: var(--fs-xs); line-height: 1.4; margin: 0; }
+
+/* 10. SERVICIOS -------------------------------------------- */
+.servicios { background-image: linear-gradient(rgba(3,16,22,0.88), rgba(3,16,22,0.91)), url("../Imagenes/seccion_2_Bg.jpg"); }
+.introduccion-oscura p:not(.sobretitulo) { color: #d1d0cc; }
+.tarjeta-servicio { overflow: hidden; background: #171d1f; border: 1px solid rgba(255,255,255,0.14); border-radius: var(--radio); }
+.tarjeta-servicio > div { padding: 0.75rem; }
+.tarjeta-servicio h3 { font-weight: bold; font-size: var(--fs-s); }
+.tarjeta-servicio p { color: var(--texto-suave); font-size: var(--fs-xs); line-height: 1.4; margin: 0; }
+
+/* 11. GALERÍA (mosaico asimétrico en portada) -------------
+   Las obras con class="destacada" ocupan un hueco doble (2×2);
+   márcalas SOLO si la foto es de alta resolución (≥ 1000 px de ancho),
+   si no se verían pixeladas. "dense" rellena los huecos libres.
+   Los huecos dobles solo se activan si el contenedor es ancho,
+   para no crear columnas fantasma en pantallas diminutas. */
+.galeria { background: radial-gradient(ellipse at top, #20201f 0%, #101719 68%); padding-block: var(--seccion); }
+.titulo-con-enlace {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end;
+    gap: 0.5rem 1.25rem; margin-bottom: 1rem;
+}
+.titulo-con-enlace h2 { margin: 0; }
+.titulo-con-enlace > a { color: var(--dorado-claro); font-size: var(--fs-s); padding-block: 0.6rem; }
+.titulo-con-enlace > a:hover { text-decoration: underline; }
+
+.mosaico { container-type: inline-size; }
+.rejilla-galeria {
+    display: grid; gap: 0.5rem; grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, max(8rem, 12%)), 1fr)); /* máx. ≈8 columnas en ultrawide */
+    grid-auto-rows: clamp(5.5rem, 9vw, 12rem);
+}
+.rejilla-galeria a { position: relative; overflow: hidden; border-radius: 0.45rem; background: #202629; }
+.rejilla-galeria img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.rejilla-galeria a:hover img { transform: scale(1.05); }
+@container (min-width: 30rem) {
+    .rejilla-galeria a.destacada { grid-column: span 2; grid-row: span 2; }
+}
+
+/* 12. TESTIMONIOS ------------------------------------------ */
+.testimonios { padding-block: var(--seccion); }
+.testimonio { padding: clamp(1rem, 0.7rem + 1vw, 1.5rem); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radio); background: rgba(25,27,28,0.88); }
+.cliente { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.cliente img { flex: none; width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
+.cliente h3 { margin: 0; font-size: var(--fs-s); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; hyphens: none; }
+.cliente span { color: var(--dorado-claro); letter-spacing: 0.15em; font-size: var(--fs-s); }
+.testimonio p { color: #e0dce4; font-size: var(--fs-s); }
+.testimonio small { color: #b6b4b0; font-size: var(--fs-xs); }
+
+/* 13. CONSEJOS --------------------------------------------- */
+.consejos { background: #241b14; border-block: 1px solid rgba(255,255,255,0.1); }
+.consejos-intro h2 { color: var(--dorado-claro); }
+.consejos-intro p:not(.sobretitulo) { color: #e3d8ca; font-size: var(--fs-s); }
+.consejo { padding-block-start: 1rem; border-top: 1px solid rgba(255,255,255,0.15); }
+.consejo img { width: 1.75rem; height: 1.75rem; margin-bottom: 0.5rem; }
+.consejo h3 { margin-bottom: 0.25rem; }
+.consejo p { color: #d4c9bc; font-size: var(--fs-xs); line-height: 1.4; margin: 0; }
+@container (min-width: 40rem) { .consejo { padding: 0 0 0 1.5rem; border-top: 0; border-left: 1px solid rgba(255,255,255,0.15); } }
+
+/* 14. CONTACTO Y FORMULARIOS ------------------------------- */
+.contacto { background: #06151c; padding-block: var(--seccion); }
+.contacto-contenido { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--gap) calc(var(--gap) * 2); }
+.contacto-intro, .datos-contacto { flex: 1 1 14rem; }
+.contacto-contenido .formulario { flex: 2 1 min(100%, 20rem); }
+.contacto h2 { font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2rem); }
+.contacto-intro p:not(.sobretitulo) { color: #c4c4bf; font-size: var(--fs-s); }
+.contacto-intro small { color: var(--dorado); }
+.datos-contacto p { display: flex; align-items: flex-start; gap: 0.75rem; font-size: var(--fs-s); margin: 0 0 0.75rem; overflow-wrap: anywhere; }
+.datos-contacto img { width: 1.25rem; height: 1.25rem; flex: none; margin-top: 0.1em; }
+.datos-contacto a:hover { color: var(--dorado-claro); text-decoration: underline; }
+
+.formulario { display: flex; flex-direction: column; gap: 0.4rem; }
+.formulario label { color: #c7c7c2; font-size: var(--fs-xs); }
+.formulario input, .formulario textarea {
+    width: 100%; max-width: 100%; padding: 0.7rem 0.8rem;
+    color: #fff; background: #14242b; border: 1px solid #5a6b73; border-radius: 0.3rem;
+    font: inherit; font-size: 1rem; /* ≥16px: iOS no hace zoom al enfocar */
+}
+.formulario input:focus-visible, .formulario textarea:focus-visible { outline: 3px solid var(--dorado-claro); outline-offset: 1px; }
+.formulario textarea { resize: vertical; min-height: 6rem; }
+.formulario small { color: #a7aeae; font-size: var(--fs-xs); margin-top: 0.25rem; }
+.acciones { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+.acciones .boton { flex: 1 1 9rem; }
+.estado { min-height: 1.25rem; margin: 0.15rem 0 0; font-size: var(--fs-xs); color: var(--texto-suave); }
+.estado.exito { color: #7fd99a; }
+.estado.error { color: #ff8f85; }
+
+/* 15. PIE DE PÁGINA ---------------------------------------- */
+.pie { background: #041118; border-top: 1px solid rgba(255,255,255,0.15); padding-block: 1.25rem; }
+.pie-contenido { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; }
+.pie .marca { width: clamp(7rem, 15vw, 9.5rem); }
+.pie nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1rem; }
+.pie nav a, .whatsapp-pie { display: inline-flex; align-items: center; gap: 0.4rem; min-block-size: 2.75rem; font-size: var(--fs-xs); }
+.pie nav a:hover { color: var(--dorado-claro); }
+.whatsapp-pie { color: var(--dorado-claro); }
+.whatsapp-pie img { width: 1.25rem; height: 1.25rem; }
+.pie small, .pie-contenido > p { color: #a9a9a3; font-size: var(--fs-xs); margin: 0; flex-basis: 100%; text-align: center; }
+
+/* 16. WHATSAPP FLOTANTE (siempre sobre la barra-caballete) */
+.whatsapp-flotante {
+    position: fixed; z-index: 900;
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    width: 3.25rem; height: 3.25rem; display: grid; place-items: center;
+    background: #10251e; border: 1px solid var(--dorado); border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+}
+.whatsapp-flotante img { width: 1.75rem; height: 1.75rem; }
+/* En relojes/pantallas diminutas taparía contenido y la cabecera ya trae el mismo botón */
+@media (max-width: 20em), (max-height: 22em) { .whatsapp-flotante { display: none; } }
