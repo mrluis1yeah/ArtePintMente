@@ -1,0 +1,31 @@
+/* PÁGINA DE CONSEJOS · reutiliza tokens de Estilos.css y Efectos.css */
+.consejos-portada { padding-block: clamp(2rem,1rem + 5vw,5rem); text-align:center;
+    background: linear-gradient(rgba(3,15,20,.82),rgba(3,15,20,.88)); }
+.consejos-portada h1 { font-size: clamp(1.625rem,1rem + 3vw,3rem); margin-bottom:.5em; }
+.consejos-portada p:not(.sobretitulo) { max-inline-size:50ch; margin-inline:auto; color:#d0d0d0; }
+.contenido-consejos { padding-block: var(--seccion); }
+.barra-filtros { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem 1rem; margin-bottom:1.25rem; }
+.filtros { display:flex; gap:.5rem; overflow-x:auto; padding:.3rem .25rem; margin-inline:-.25rem; scroll-snap-type:x proximity; scrollbar-width:thin; max-inline-size:100%; }
+@media (min-width:60em) { .filtros { flex-wrap:wrap; overflow:visible; } }
+.filtro { --c:#e9a24b; flex:none; scroll-snap-align:start; display:inline-flex; align-items:center; gap:.5rem; min-block-size:2.75rem; padding:.4rem 1rem;
+    color:var(--texto); font:inherit; font-size:var(--fs-s); background:var(--tarjeta); border:1px solid var(--linea); border-radius:2rem; cursor:pointer;
+    transition:transform .2s, box-shadow .25s, background .25s, color .25s; }
+.filtro::before { content:""; width:.7rem; height:.7rem; border-radius:50%; background:var(--c); box-shadow:0 0 10px var(--c); }
+.filtro small { opacity:.7; font-size:var(--fs-xs); }
+.filtro:hover { transform:translateY(-2px); box-shadow:0 6px 18px color-mix(in srgb, var(--c) 45%, transparent); }
+.filtro[aria-pressed="true"] { color:#17130d; background:var(--c); border-color:var(--c); box-shadow:0 0 22px color-mix(in srgb, var(--c) 55%, transparent); }
+.filtro[aria-pressed="true"]::before { background:#17130d; box-shadow:none; }
+.acciones-consejos { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+#cuentaConsejos { margin:0; color:var(--dorado); font-size:var(--fs-s); }
+.rejilla-consejos { display:grid; gap:var(--gap); grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr)); }
+.tarjeta-consejo { --c:#e9a24b; display:flex; flex-direction:column; gap:.5rem; padding:1.1rem 1.1rem 1.2rem; overflow:hidden;
+    background:var(--tarjeta); border:1px solid var(--linea); border-top:3px solid var(--c); border-radius:var(--radio); }
+.tarjeta-consejo::after { content:""; position:absolute; inset:auto -30% -55% auto; width:60%; aspect-ratio:1; border-radius:50%; pointer-events:none;
+    background:var(--c); opacity:.14; filter:blur(34px); }
+.tarjeta-consejo .etiqueta { display:inline-flex; align-items:center; gap:.45rem; color:var(--texto-suave); font-size:var(--fs-xs); }
+.tarjeta-consejo .etiqueta::before { content:""; width:.6rem; height:.6rem; border-radius:50%; background:var(--c); }
+.tarjeta-consejo h3 { margin:0; font-weight:bold; }
+.tarjeta-consejo p { margin:0; color:var(--texto-suave); font-size:var(--fs-s); line-height:1.5; }
+.tarjeta-consejo.destacado { animation:destaca 1.6s ease; }
+@keyframes destaca { 20%,60% { transform:translateY(-6px) scale(1.03); box-shadow:0 0 0 2px var(--c), 0 14px 36px color-mix(in srgb, var(--c) 55%, transparent); } }
+@media (prefers-reduced-motion:reduce) { .tarjeta-consejo.destacado { animation:none; outline:3px solid var(--c); } }
