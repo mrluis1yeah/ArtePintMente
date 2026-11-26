@@ -131,3 +131,5 @@ Al responder el correo recibido, la respuesta va al visitante.
 - consejos.html + Js/consejos.js + Css/Consejos.css: 50 consejos con filtro. Para añadir uno, agrega una línea a la lista en consejos.js
   (y una categoría nueva en "categorias" si hace falta).
 - El mensaje del preloader está en Js/efectos.js (lista "lemas").
+
+Por favor, revisa la paleta de colores para optimizar la legibilidad de la interfaz. Actualmente, el texto de los encabezado y los titulos de varias sesiones no se distingue del fondo por falta de contraste, y hay varios títulos que no se diferencian tanto en el modo oscuro y el modo diurno
