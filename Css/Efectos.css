@@ -1,0 +1,140 @@
+/* ==========================================================
+   EFECTOS · temas día/noche, luces vivas, preloader, reveal, visor
+   Se carga DESPUÉS de Estilos.css y solo añade/ajusta.
+   Noche = diseño original. Día = papel crema. Cabecera, pie y
+   portada conservan la paleta oscura de marca (el logo lo pide).
+   ========================================================== */
+:root { --oro:#e9a24b; --lila:#d4569a; --cian:#2fd1d1; --linea:rgba(255,255,255,.14); --tarjeta:rgba(23,29,31,.88);
+    --titulo:#fff6e6; /* títulos: un punto más claro/fuerte que el texto corrido */ }
+/* MODO DÍA · contrastes calculados (WCAG AA ≥ 4.5:1 en el crema más oscuro, #efe0c5):
+   --dorado #8a4d08 → 5.1:1 · --dorado-claro #7a4308 → 6.1:1 · --texto-suave #5b4e41 → 6.2:1 · --titulo #1f1409 → 14:1 */
+[data-tema="dia"] {
+    color-scheme: light;
+    --fondo:#fbf4e8; --dorado:#8a4d08; --dorado-claro:#7a4308; --texto:#2a2018; --texto-suave:#5b4e41;
+    --titulo:#1f1409;
+    --linea:rgba(60,40,10,.18); --tarjeta:#fffaf0;
+}
+/* Zonas que siguen siendo oscuras en ambos temas: recuperan la paleta de noche.
+   IMPORTANTE: además de redefinir las variables hay que re-aplicar `color`, porque el body
+   ya resolvió su color oscuro y los hijos lo HEREDAN (sin esto, h1 y enlaces del pie quedaban
+   oscuros sobre fondo oscuro en modo día). */
+[data-tema="dia"] :is(.encabezado,.pie,.portada,.galeria-portada,.consejos-portada,.cargador,.caballete,.ventana-obra__cuerpo .cerrar-overlay) {
+    --dorado:#e9a24b; --dorado-claro:#ffc16a; --texto:#f8f2e9; --texto-suave:#c6c3bd; --titulo:#fff6e6;
+    color: var(--texto);
+}
+/* Títulos con su propio color (más marcados que el texto de párrafo en ambos modos) */
+h1, h2, h3 { color: var(--titulo); }
+html { transition: background-color .4s; }
+body { transition: background-color .4s, color .4s; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---- Superficies en modo día ---- */
+[data-tema="dia"] .fondo-textura { background: linear-gradient(rgba(251,244,232,.93),rgba(251,244,232,.96)), url("../Imagenes/seccion_2_Bg.jpg") center/cover; }
+[data-tema="dia"] .servicios { background-image: linear-gradient(rgba(251,244,232,.92),rgba(251,244,232,.95)), url("../Imagenes/seccion_2_Bg.jpg"); }
+[data-tema="dia"] .galeria { background: radial-gradient(ellipse at top,#fff6e4 0%,#f1e3c8 75%); }
+[data-tema="dia"] .consejos { background: #efe0c5; border-color: var(--linea); }
+[data-tema="dia"] .contacto { background: #f6ead4; }
+[data-tema="dia"] :is(.principio,.tarjeta-servicio,.testimonio) { background: var(--tarjeta); border-color: var(--linea); }
+[data-tema="dia"] .introduccion-oscura p:not(.sobretitulo), [data-tema="dia"] .contacto-intro p:not(.sobretitulo),
+[data-tema="dia"] .consejos-intro p:not(.sobretitulo), [data-tema="dia"] .consejo p, [data-tema="dia"] .testimonio p,
+[data-tema="dia"] .formulario label, [data-tema="dia"] .informacion-obra > p:not(.sobretitulo):not(.precio) { color: #4a3b2c; }
+[data-tema="dia"] :is(.testimonio small,.formulario small,.estado) { color: #6b5d4f; }
+[data-tema="dia"] .estado.exito { color: #1f7a3d; } [data-tema="dia"] .estado.error { color: #b3261e; }
+[data-tema="dia"] .consejo { border-color: var(--linea); }
+[data-tema="dia"] .formulario :is(input,textarea) { color: #2a2018; background: #fffdf8; border-color: #b9a98f; }
+[data-tema="dia"] .ventana-obra { background: #fbf4e8; border-color: rgba(168,98,15,.5); }
+[data-tema="dia"] .imagen-detalle { background: #e9dcc3; }
+[data-tema="dia"] .precio { color: #8f510a; }
+[data-tema="dia"] .boton-dorado { color:#17130d; background: linear-gradient(135deg,#ffc16a,#e9a24b); border-color:#e9a24b; }
+[data-tema="dia"] .boton-borde:hover { color:#fff; background:#8f510a; }
+[data-tema="dia"] .encabezado .boton-borde:hover, [data-tema="dia"] .pie .boton-borde:hover { color:#17130d; background:#ffc16a; }
+/* Noche: la sección de proceso (crema en el original) se vuelve cálida y oscura */
+[data-tema="noche"] .proceso { color: var(--texto); background: linear-gradient(#0f0c09,#1a140e); }
+[data-tema="noche"] :is(.texto-oscuro,.numero) { color: var(--dorado); }
+
+/* ---- Botón de tema ---- */
+.barra__acciones { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+.tema-boton { width:2.75rem; height:2.75rem; display:grid; place-items:center; padding:0; color:var(--dorado-claro);
+    background:rgba(255,193,106,.08); border:1px solid var(--dorado); border-radius:50%; cursor:pointer;
+    transition:transform .35s, background .3s, box-shadow .3s; }
+.tema-boton:hover { transform:rotate(20deg) scale(1.06); background:rgba(255,193,106,.2); box-shadow:0 0 20px rgba(255,193,106,.5); }
+.tema-boton svg { width:1.4rem; height:1.4rem; overflow:visible; }
+.tema-boton :is(.sol,.luna,.rayos) { transform-origin:12px 12px; transition:transform .55s cubic-bezier(.5,1.6,.4,1), opacity .35s; }
+[data-tema="noche"] :is(.sol,.rayos) { transform:scale(0) rotate(-90deg); opacity:0; }
+[data-tema="dia"] .luna { transform:scale(0) rotate(90deg); opacity:0; }
+
+/* ---- Luces vivas ---- */
+.luces { position:fixed; inset:0; z-index:5; overflow:hidden; pointer-events:none; }
+.luces i { position:absolute; width:min(65vw,34rem); aspect-ratio:1; border-radius:50%; filter:blur(80px); opacity:.28;
+    mix-blend-mode:screen; animation:deriva 24s ease-in-out infinite alternate; }
+.luces i:nth-child(1) { background:var(--oro); top:-12%; left:-12%; }
+.luces i:nth-child(2) { background:var(--lila); right:-18%; top:28%; animation-duration:30s; animation-delay:-8s; }
+.luces i:nth-child(3) { background:var(--cian); left:18%; bottom:-22%; animation-duration:27s; animation-delay:-14s; }
+[data-tema="dia"] .luces i { mix-blend-mode:multiply; opacity:.17; }
+@keyframes deriva { to { transform:translate(22vw,14vh) scale(1.3); } }
+.portada::after { content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(26rem circle at var(--mx,70%) var(--my,40%), rgba(255,193,106,.22), transparent 65%); }
+.portada h1 span { background:linear-gradient(100deg,#ffc16a,#ff7eb6,#5ee7e7,#ffc16a); background-size:300% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent; animation:tinta 9s linear infinite; }
+@keyframes tinta { to { background-position:300% 0; } }
+:is(.tarjeta-servicio,.principio,.testimonio,.tarjeta-consejo,.consejo) { position:relative; }
+:is(.tarjeta-servicio,.principio,.testimonio,.tarjeta-consejo)::before { content:""; position:absolute; inset:0; z-index:1; border-radius:inherit;
+    pointer-events:none; opacity:0; transition:opacity .3s;
+    background:radial-gradient(16rem circle at var(--mx,50%) var(--my,50%), rgba(255,193,106,.24), transparent 62%); }
+:is(.tarjeta-servicio,.principio,.testimonio,.tarjeta-consejo):hover::before { opacity:1; }
+
+/* ---- Barra de progreso de lectura ---- */
+.progreso { position:fixed; z-index:60; top:0; left:0; right:0; height:3px; transform:scaleX(0); transform-origin:0 50%;
+    background:linear-gradient(90deg,var(--oro),var(--lila),var(--cian)); display:none; }
+@supports (animation-timeline: scroll()) { .progreso { display:block; animation:avanza linear both; animation-timeline:scroll(root); } }
+@keyframes avanza { to { transform:scaleX(1); } }
+
+/* ---- Preloader ---- */
+.cargador { position:fixed; inset:0; z-index:5000; display:grid; place-content:center; justify-items:center; gap:1.4rem; padding:1.5rem;
+    text-align:center; color:#f8f2e9; background:radial-gradient(ellipse at 50% 38%,#13323d,#04100f 72%);
+    transition:opacity .7s, visibility .7s, transform .9s cubic-bezier(.7,0,.2,1); animation:salvavidas .4s 6s forwards; }
+.cargador.listo { opacity:0; visibility:hidden; transform:scale(1.08); }
+.cargador img { width:min(72vw,19rem); animation:respira 2.6s ease-in-out infinite; filter:drop-shadow(0 0 26px rgba(255,193,106,.45)); }
+.cargador__barra { width:min(60vw,12rem); height:3px; border-radius:3px; background:rgba(255,255,255,.12); overflow:hidden; }
+.cargador__barra::after { content:""; display:block; height:100%; width:42%; background:linear-gradient(90deg,#ffc16a,#d4569a,#2fd1d1); animation:pasa 1.3s ease-in-out infinite; }
+.cargador__lema { max-width:28ch; min-height:3em; margin:0; font:italic clamp(1rem,.9rem + .7vw,1.35rem)/1.45 Georgia,serif; color:#e9dfcf; }
+html.js:not(.cargado) { overflow:hidden; }
+@keyframes respira { 50% { transform:scale(1.05); } }
+@keyframes pasa { from { transform:translateX(-110%); } to { transform:translateX(260%); } }
+@keyframes salvavidas { to { opacity:0; visibility:hidden; } }
+
+/* ---- Scroll Reveal ---- */
+.js [data-revelar] { opacity:0; transform:translateY(1.75rem) scale(.98);
+    transition:opacity .8s ease var(--d,0ms), transform .8s cubic-bezier(.2,.8,.2,1) var(--d,0ms); }
+.js [data-revelar].revelado { opacity:1; transform:none; }
+
+/* ---- Mosaico del inicio: pie de foto al pasar ---- */
+.rejilla-galeria a { cursor:zoom-in; }
+.rejilla-galeria a::after { content:attr(data-nombre); position:absolute; inset:auto 0 0; padding:1.6rem .6rem .5rem; color:#fff;
+    font-size:var(--fs-xs); background:linear-gradient(transparent,rgba(0,0,0,.82)); transform:translateY(101%); transition:transform .35s; }
+.rejilla-galeria a:is(:hover,:focus-visible)::after { transform:none; }
+@media (hover:none) { .rejilla-galeria a::after { transform:none; } }
+.tarjeta-obra img { transition:transform .6s; }
+.tarjeta-obra:hover img { transform:scale(1.07); }
+.tarjeta-servicio { overflow:hidden; }
+
+/* ---- Visor de obras (reemplaza abrir la imagen completa) ---- */
+.ventana-obra[open] { animation:entra .45s cubic-bezier(.2,.9,.3,1.08); }
+.ventana-obra::backdrop { background:rgba(2,8,10,.82); backdrop-filter:blur(8px); }
+@keyframes entra { from { opacity:0; transform:translateY(2rem) scale(.94); } }
+.imagen-detalle { overflow:hidden; }
+.imagen-detalle::before { content:""; position:absolute; inset:-1.5rem; background:var(--fondo-img) center/cover; filter:blur(26px) brightness(.55); }
+.imagen-detalle img { object-fit:contain; z-index:1; animation:foto .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes foto { from { opacity:0; transform:translateX(calc(var(--dir,0) * 2.5rem)) scale(1.04); } }
+.visor-nav { position:absolute; z-index:2; inset-inline:.5rem; bottom:.5rem; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+.visor-nav button { pointer-events:auto; width:2.75rem; height:2.75rem; display:grid; place-items:center; padding:0; color:#fff; font-size:1.6rem; line-height:1;
+    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.3); border-radius:50%; cursor:pointer; transition:background .2s, transform .2s; }
+.visor-nav button:hover { background:rgba(233,162,75,.85); color:#17130d; transform:scale(1.08); }
+.visor-nav output { color:#fff; font-size:var(--fs-xs); padding:.2rem .7rem; background:rgba(0,0,0,.55); border-radius:2rem; }
+.ventana-obra { touch-action:pan-y; }
+
+@media (prefers-reduced-motion: reduce) {
+    .luces i, .portada h1 span, .cargador img, .cargador__barra::after, .ventana-obra[open], .imagen-detalle img { animation:none; }
+    .js [data-revelar] { opacity:1; transform:none; transition:none; }
+    .cargador { transition:none; }
+}

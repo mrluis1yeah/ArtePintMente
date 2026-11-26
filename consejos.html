@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Consejos de arte y dibujo | ArtePintMente</title>
+    <meta name="description" content="50 consejos prácticos de arte y dibujo, filtrados por categoría: fundamentos, luz, color, composición, retrato, paisaje, materiales, hábitos y cuidado de la obra.">
+    <link rel="icon" type="image/svg+xml" href="Imagenes/favicon.svg">
+    <meta name="theme-color" content="#06131a">
+    <meta name="color-scheme" content="dark light">
+    <script>try{var t=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: light)").matches?"dia":"noche");document.documentElement.dataset.tema=t}catch(e){document.documentElement.dataset.tema="noche"}</script>
+    <!-- Marca "js" lo antes posible: sin JS, la navegación queda siempre visible -->
+    <script>document.documentElement.classList.add("js")</script>
+    <link rel="stylesheet" href="Css/Estilos.css">
+    
+    <link rel="stylesheet" href="Css/Efectos.css">
+    <link rel="stylesheet" href="Css/Consejos.css">
+</head>
+<body>
+    <div class="cargador" id="cargador" role="status" aria-live="polite"><img src="Imagenes/logo.svg" alt="ArtePintMente" width="715" height="166"><span class="cargador__barra" aria-hidden="true"></span><p class="cargador__lema">Cada trazo dice lo que las palabras no alcanzan.</p></div>
+    <div class="luces" aria-hidden="true"><i></i><i></i><i></i></div>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <!-- ENCABEZADO: logo + botón de WhatsApp (se reacomoda en varias filas si no cabe) -->
+    <header class="encabezado">
+        <div class="contenedor barra">
+            <a class="marca" href="index.html#inicio" aria-label="ArtePintMente, ir al inicio">
+                <img src="Imagenes/logo.svg" alt="Logo de ArtePintMente" width="715" height="166">
+            </a>
+            <!-- Cambia el número de ejemplo por el WhatsApp real, con indicativo del país. -->
+            <div class="barra__acciones">
+                <button class="tema-boton" type="button" aria-pressed="false" aria-label="Cambiar entre modo día y noche"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle class="sol" cx="12" cy="12" r="4.2"/><path class="luna" d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></g><g class="rayos" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></svg></button>
+                <a class="boton boton-borde" href="https://wa.me/573227919305" target="_blank" rel="noopener noreferrer">
+                <img src="Imagenes/iconos/icon_whatsapp.svg" alt="" class="icono-boton" width="17" height="17"> Escríbenos
+            </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN (barra-caballete). Con JS y poco ancho se pliega en un botón "Menú".
+         Orden de tabulación: botón → enlaces. Los enlaces plegados no reciben foco. -->
+    <div class="caballete">
+        <button class="caballete__boton" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Menú principal">
+            <svg class="caballete__icono" width="22" height="16" viewBox="0 0 22 16" aria-hidden="true" focusable="false">
+                <g stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line class="l1" x1="2" y1="2" x2="20" y2="2"/><line class="l2" x1="2" y1="8" x2="20" y2="8"/><line class="l3" x1="2" y1="14" x2="20" y2="14"/>
+                </g>
+            </svg>
+            Menú
+        </button>
+        <nav aria-label="Navegación principal">
+            <ul class="caballete__lista" id="menu-principal">
+                <li><a href="index.html#inicio">Inicio</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="index.html#servicios">Servicios</a></li>
+                <li><a href="index.html#proceso">Proceso</a></li>
+                <li><a href="consejos.html" aria-current="page">Consejos</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- PRESENTACIÓN -->
+    <section class="consejos-portada">
+        <div class="contenedor">
+            <p class="sobretitulo">CONSEJOS DE ARTE Y DIBUJO</p>
+            <h1>Aprende a mirar, trazar y cuidar tu obra</h1>
+            <p>Cincuenta ideas prácticas para dibujar y pintar mejor. Elige una categoría o deja que la suerte te sugiera un consejo.</p>
+        </div>
+    </section>
+
+    <main class="contenedor contenido-consejos" id="contenido">
+        <div class="barra-filtros">
+            <div class="filtros" id="filtros" role="group" aria-label="Filtrar consejos por categoría"></div>
+            <div class="acciones-consejos">
+                <p id="cuentaConsejos" role="status" aria-live="polite"></p>
+                <button type="button" class="boton boton-borde" id="consejoAzar">Un consejo al azar</button>
+            </div>
+        </div>
+        <div class="rejilla-consejos" id="rejillaConsejos">
+            <noscript><p>Activa JavaScript para ver los consejos, o <a href="https://wa.me/573227919305">escríbenos por WhatsApp</a>.</p></noscript>
+        </div>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor pie-contenido">
+            <a class="marca" href="index.html" aria-label="ArtePintMente, ir al inicio"><img src="Imagenes/logo.svg" alt="ArtePintMente" width="715" height="166"></a>
+            <a class="whatsapp-pie" href="https://wa.me/573227919305" target="_blank" rel="noopener noreferrer">
+                <img src="Imagenes/iconos/icon_whatsapp.svg" alt=""> WhatsApp
+            </a>
+            <p>© 2026 ArtePintMente. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="Js/efectos.js"></script>
+    <script src="Js/menu.js"></script>
+    <script src="Js/consejos.js"></script>
+    <script src="Js/script.js"></script>
+</body>
+</html>
